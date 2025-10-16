@@ -1,0 +1,69 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 12px 20px;
+}
+
+.header-wrap {
+    /* width: 400px; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 auto;
+}
+    
+.logo {
+    color: #394648;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.header-navigators {
+    display: flex;
+    align-items: center;
+}
+
+.header-icon-button {
+    /* 버튼 기본 스타일 제거 */
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%; /* 원형 버튼 */
+    transition: background-color 0.2s;
+}
+
+/* 버튼에 마우스를 올렸을 때 강조 */
+.header-icon-button:hover {
+    background-color: #F8E9E9;
+}
+
+/* 이미지 크기 조절 */
+.header-icon-button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* 뒤로가기 화살표 이미지 */
+.back-image {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #CBAC88; 
+}
+
+/* 프로필 이미지 */
+.profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* 원형 */
+    border: 2px solid #CBAC88; 
+}

@@ -1,0 +1,33 @@
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css" type="text/css">
+    <title>아무말대잔치 로그인</title>
+</head>
+
+<body>
+    <header id="header-placeholder"></header>
+    <section class="wrap">
+        <h2 class="login-text">로그인</h2>
+        <main>
+            <div class="login-input">
+                <label for="id">이메일</label>
+                <input type="email" name="email" id="id" placeholder="이메일을 입력하세요" required>
+            </div>
+            <div class="login-input">
+                <label for="pw">비밀번호</label>
+                <input type="password" name="password" id="pw" placeholder="비밀번호를 입력하세요" required>
+                <p id="helper" class="helper-text"></p>
+            </div>
+            <div class="buttons">
+                <button id="login-button">로그인</button>
+                <a href="../sigup">회원가입</a>
+            </div>
+        </main>
+    </section>
+    <script type="module" src="login.js"></script>
+</body>
+
+</html>
