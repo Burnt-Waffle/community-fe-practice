@@ -10,7 +10,8 @@
     background-color: #ffffff;
     border-bottom: 1px solid #394648;
 }
-    
+
+/* 아무 말 대잔치 로고 */
 .logo {
     color: #394648;
     font-size: 32px;
@@ -41,4 +42,38 @@
     align-items: center;
     border-radius: 50%;
     border: 2px solid #CBAC88;
+}
+
+.profile-container {
+    position: relative;
+}
+
+.header-dropdown-menu {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    z-index: 100;
+    min-width: 150px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #F8E9E9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    visibility: hidden;
+}
+
+.header-dropdown-menu.is-active {
+    visibility: visible;
+}
+
+.header-dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #394648;
+    text-decoration: none;
+    text-align: center;
+}
+
+.header-dropdown-menu a:hover {
+    background-color: #F8E9E9;
 }

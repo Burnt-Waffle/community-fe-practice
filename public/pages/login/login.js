@@ -1,14 +1,14 @@
-// 헤더 가져오기
-fetch('/public/components/header/header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-            });
+import { loadHeader } from "../../components/header/header.js";
 
 const emailInput = document.getElementById('id');
 const passwordInput = document.getElementById('pw');
 const loginButton = document.getElementById('login-button');
 const helperText = document.getElementById('helper');
+
+// DOM이 완전히 로드된 후에 스크립트를 실행
+document.addEventListener('DOMContentLoaded', async () => {
+    loadHeader();
+});
 
 // 로그인 버튼의 이벤트 리스너
 loginButton.addEventListener('click', async () => {
