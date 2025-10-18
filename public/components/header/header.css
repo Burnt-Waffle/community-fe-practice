@@ -12,6 +12,7 @@
     justify-content: space-evenly;
     align-items: center;
     background-color: #ffffff;
+    border-bottom: 1px solid #394648;
 }
     
 .logo {
