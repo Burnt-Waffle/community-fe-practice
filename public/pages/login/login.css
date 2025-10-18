@@ -2,29 +2,16 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Helvetica', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #394648;
-}
-
-/* 로그인 폼 컨테이너 */
-.wrap {
-    width: 400px;
-    padding: 40px;
-    border-radius: 8px;
-    background-color: #ffffff;
-}
-
 /* '로그인' 제목 스타일 */
 .login-text {
     text-align: center;
     font-size: 20px;
     margin-bottom: 30px;
     color: #394648;
+}
+
+.main-content {
+    padding:40px;
 }
 
 /* 입력 필드 (이메일, 비밀번호) */

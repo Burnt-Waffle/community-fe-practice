@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css" type="text/css">
+    <link href="/public/components/header/header.css" rel="stylesheet" type="text/css">
+    <link href="/public/components/layout/layout.css" rel="stylesheet" type="text/css">
+    <link href="login.css" rel="stylesheet" type="text/css">
     <title>아무말대잔치 로그인</title>
 </head>
 <body>
+    <!-- 공용 헤더 -->
     <header id="header-placeholder"></header>
+    <!-- 로그인 창 -->
     <section class="wrap">
         <h2 class="login-text">로그인</h2>
-        <main>
+        <main class="main-content">
+            <!-- 이메일 비밀번호 입력 -->
             <div class="login-input">
                 <label for="id">이메일</label>
                 <input type="email" name="email" id="id" placeholder="이메일을 입력하세요" required>
@@ -20,6 +25,7 @@
                 <input type="password" name="password" id="pw" placeholder="비밀번호를 입력하세요" required>
                 <p id="helper" class="helper-text"></p>
             </div>
+            <!-- 로그인 회원가입 버튼 -->
             <div class="buttons">
                 <button id="login-button">로그인</button>
                 <a href="../sigup">회원가입</a>
