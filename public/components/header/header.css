@@ -13,22 +13,17 @@ header {
 }
 
 .header-wrap {
-    /* width: 400px; */
+    width: 400px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin: 0 auto;
 }
     
 .logo {
     color: #394648;
     font-size: 24px;
     font-weight: 700;
-}
-
-.header-navigators {
-    display: flex;
-    align-items: center;
 }
 
 .header-icon-button {
@@ -46,24 +41,13 @@ header {
     background-color: #F8E9E9;
 }
 
-/* 이미지 크기 조절 */
+/* 버튼 이미지 맞춤 */
 .header-icon-button img {
-    width: 24px;
-    height: 24px;
-}
-
-/* 뒤로가기 화살표 이미지 */
-.back-image {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
-    border: 2px solid #CBAC88; 
-}
-
-/* 프로필 이미지 */
-.profile-image {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%; /* 원형 */
-    border: 2px solid #CBAC88; 
+    border: 2px solid #CBAC88;
 }

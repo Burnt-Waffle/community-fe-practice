@@ -1,3 +1,4 @@
+// 헤더 가져오기
 fetch('/public/components/header/header.html')
             .then(response => response.text())
             .then(data => {
@@ -49,8 +50,7 @@ loginButton.addEventListener('click', async () => {
         if (response.ok) {
             // 로그인 성공 (HTTP 상태 코드가 200-299인 경우)
             alert('로그인 되었습니다!');
-            // 메인 페이지나 다른 페이지로 이동
-            window.location.href = '/'; // <-- 로그인 성공 후 이동할 페이지 주소 추가
+            window.location.href = '/public/pages/post_list/post_list.html'; // 로그인 성공 후 이동할 페이지 주소
         } else {
             // 로그인 실패 (서버에서 에러 응답을 보낸 경우)
             const errorData = await response.json(); // 에러 메시지를 JSON 형태로 받음
