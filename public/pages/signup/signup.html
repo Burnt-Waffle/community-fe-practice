@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/public/components/header/header.css" rel="stylesheet" type="text/css">
+    <link href="/public/components/layout/layout.css" rel="stylesheet" type="text/css">
+    <link href="signup.css" rel="stylesheet" type="text/css">
+    <title>아무말대잔치 로그인</title>
+</head>
+
+<body>
+    <!-- 공용 헤더 -->
+    <header id="header-placeholder"></header>
+    <!-- 회원가입 창 -->
+    <section class="wrap">
+        <h2 class="signup-text">회원가입</h2>
+        <main class="main-content">
+            <!-- 회원가입 정보 입력 -->
+            <div class="signup-input">
+                <label>프로필 사진</label>
+                <div class="profile-image-preview">
+                    <img id="profile-image-button" src="/assets/profile-default.png" alt="프로필 이미지 미리보기">
+                </div>
+                <input type="file" id="profile-image-upload" accept="image/*">
+            </div>
+            <div class="signup-input">
+                <label>이메일</label>
+                <input type="email" name="email" id="id" placeholder="이메일을 입력하세요" required>
+                <p id="email-helper" class="helper-text"></p>
+            </div>
+            <div class="signup-input">
+                <label>비밀번호</label>
+                <input type="password" name="password" id="pw" placeholder="비밀번호를 입력하세요" required>
+                <p id="password-helper" class="helper-text"></p>
+            </div>
+            <div class="signup-input">
+                <label>비밀번호 확인</label>
+                <input type="password" name="password-confirm" id="pw-confirm" placeholder="비밀번호를 한번 더 입력하세요" required>
+                <p id="password-confirm-helper" class="helper-text"></p>
+            </div>
+            <div class="signup-input">
+                <label>닉네임</label>
+                <input name="nickname" id="nickname" placeholder="닉네임을 입력하세요" required>
+                <p id="nickname-helper" class="helper-text"></p>
+            </div>
+            <!-- 회원가입 버튼 -->
+            <div class="buttons">
+                <button id="signup-button">회원가입</button>
+            </div>
+        </main>
+    </section>
+    <script src="signup.js" type="module"></script>
+</body>
+
+</html>
