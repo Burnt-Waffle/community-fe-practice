@@ -1,4 +1,6 @@
-export const loadHeader = async () => {
+export const loadHeader = async (options = {}) => {
+    const config = {showBackButton: true, ...options};
+
     const headerPlaceholder = document.getElementById('header-placeholder');
     if (!headerPlaceholder) {
         return;
@@ -10,11 +12,25 @@ export const loadHeader = async () => {
             throw new Error(`HTTP error satus: ${response.status}`);
         }
         const headerHtml = await response.text();
-
         headerPlaceholder.innerHTML = headerHtml;
 
-        // 뒤로가기 버튼 설정
         const backButton = document.getElementById('back-button');
+        const profileButton = document.getElementById('profile-button');
+        const dropdownMenu = document.querySelector('.header-dropdown-menu')
+        const logoutButton = document.getElementById('logout-button');
+        
+        // 뒤로가기 버튼 숨김
+        if (!config.showBackButton && backButton) {
+            backButton.classList.add('hidden');
+        }
+        
+        // 프로필 아이콘 숨김
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken && profileButton) {
+            profileButton.classList.add('hidden');
+        }
+
+        // 뒤로가기 버튼 설정
         if (backButton) {
             backButton.addEventListener('click', () => {
                 history.back();
@@ -22,8 +38,6 @@ export const loadHeader = async () => {
         }
 
         // 프로필 이미지 버튼 설정
-        const profileButton = document.getElementById('profile-button');
-        const dropdownMenu = document.querySelector('.header-dropdown-menu')
         if (profileButton && dropdownMenu) {
             profileButton.addEventListener('click', (event) => {
                 event.stopPropagation();
@@ -32,11 +46,12 @@ export const loadHeader = async () => {
         }
 
         // 로그아웃 버튼 설정
-        const logoutButton = document.getElementById('logout-button');
         if (logoutButton) {
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                // 로그아웃 로직 추가 (토큰 제거)
+                // 로그아웃 시 로컬 스토리지에서 토큰 제거
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
                 alert('로그아웃 되었습니다.');
                 window.location.href = '/public/pages/login/login.html';
             });

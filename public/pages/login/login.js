@@ -7,7 +7,7 @@ const helperText = document.getElementById('helper');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    loadHeader();
+    loadHeader({ showBackButton: false });
 });
 
 // 로그인 버튼의 이벤트 리스너
@@ -49,8 +49,15 @@ loginButton.addEventListener('click', async () => {
 
         if (response.ok) {
             // 로그인 성공 (HTTP 상태 코드가 200-299인 경우)
-            alert('로그인 되었습니다!');
-            window.location.href = '/public/pages/post_list/post_list.html'; // 로그인 성공 후 이동할 페이지 주소
+            const data = await response.json();
+
+            // JWT 토큰 로컬 스토리지에 저장
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+
+            // 로그인 성공 후 이동할 페이지 주소
+            window.location.href = '/public/pages/post_list/post_list.html';
+
         } else {
             // 로그인 실패 (서버에서 에러 응답을 보낸 경우)
             const errorData = await response.json(); // 에러 메시지를 JSON 형태로 받음
