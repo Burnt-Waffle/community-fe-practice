@@ -1,6 +1,6 @@
 import { loadHeader } from '../../components/header/header.js';
 import { fetchPosts } from '/api/postRequest.js'
-import { createPostElement } from '../../components/post_preview/createPostElement.js';
+import { createPostElement } from '../../components/post/createPostElement.js';
 
 let nextPage = 0;
 const pageSize = 30;

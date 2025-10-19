@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "../../../utils/config.js";
+
 export const createPostElement = ({ id, title, thumbnailUrl, authorNickname, authorProfileImageUrl, createdAt, updatedAt, viewCount, likeCount, commentCount }) => {
     const container = document.createElement('div');
     container.className = 'post-container';
@@ -11,8 +13,7 @@ export const createPostElement = ({ id, title, thumbnailUrl, authorNickname, aut
     }).replace(/ /g, '');
 
     // 프로필 이미지 경로 조합
-    const backendUrl = "http://localhost:8080"
-    const profileImageUrl = authorProfileImageUrl?`${backendUrl}${authorProfileImageUrl}`:'/assests/profile-default.png'
+    const profileImageUrl = authorProfileImageUrl?`${API_BASE_URL}${authorProfileImageUrl}`:'/assests/profile-default.png'
 
     container.innerHTML = `
         <h3 class="post-title">${title}</h3>
