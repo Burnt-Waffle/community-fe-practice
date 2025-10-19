@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
 
 const emailInput = document.getElementById('id');
@@ -39,7 +40,7 @@ loginButton.addEventListener('click', async () => {
 
     // 서버에 로그인 요청
     try {
-        const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+        const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,7 +61,7 @@ loginButton.addEventListener('click', async () => {
 
         } else {
             // 로그인 실패 (서버에서 에러 응답을 보낸 경우)
-            const errorData = await response.json(); // 에러 메시지를 JSON 형태로 받음
+            const errorData = await response.json();
             helperText.textContent = errorData.message || '이메일 또는 비밀번호가 올바르지 않습니다.';
         }
     } catch (error) {

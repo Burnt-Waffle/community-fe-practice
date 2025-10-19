@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080';
+import { API_BASE_URL } from "../utils/config.js";
 
 // 인증 토큰을 포함하여 API 요청을 보내는 범용 fetch 함수
 export const authFetch = async (endpoint, options = {}) => {
@@ -14,7 +14,7 @@ export const authFetch = async (endpoint, options = {}) => {
         headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         ...options,
         headers,
     });
