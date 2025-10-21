@@ -84,25 +84,26 @@ signupButton.addEventListener('click', async () => {
             passwordConfirm: passwordConfirm,
             nickname: nickname,
         };
-    };
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/users/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(signupData)
-        });
-        if (response.ok) {
-            alert('회원가입 성공!');
-            window.location.href = '/public/pages/login/login.html';
-        } else {
-            const errorData = await response.json();
-            alert(errorData.message || '회원가입에 실패했습니다.');
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/v1/users/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(signupData)
+            });
+            if (response.ok) {
+                alert('회원가입 성공!');
+                window.location.href = '/public/pages/login/login.html';
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || '회원가입에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Signup Error:', error);
+            alert('회원가입 중 문제가 발생했습니다.');
         }
-    } catch (error) {
-        console.error('Signup Error:', error);
-        alert('회원가입 중 문제가 발생했습니다.');
-    }
+    };
 });

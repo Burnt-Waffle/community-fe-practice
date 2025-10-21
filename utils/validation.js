@@ -15,7 +15,7 @@ export function validatePassword(password) {
         return '비밀번호는 8자 이상, 20자 이하이어야 합니다.';
     }
 
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).*$/;
     if (!passwordPattern.test(password)) {
         return '대문자, 소문자, 숫자, 특수문자가 각각 최소 1개를 포함해야 합니다.';
     }
