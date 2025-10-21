@@ -16,17 +16,21 @@ export const createPostDetail = ({ id, title, content, thumbnailUrl, imageUrls, 
         profileImageUrl = '/assests/profile-default.png'
     }
 
+    const imagesHtml = imageUrls.map(url => `<img src="${API_BASE_URL}${url}" alt="게시물 이미지"`).join()
+
     container.innerHTML = `
         <h3 class="post-title">${title}</h3>
                 <div class="post-header">
                     <img class="author-profile-image" src="${profileImageUrl}" alt="프로필 이미지">
                     <div class="author">${authorNickname}</div>
                     <div class="post-date">${formattedDate}</div>
-                    <button class="edit">수정</button>
-                    <button class="delete">삭제</button>
+                    <div class="buttons">
+                        <button class="edit">수정</button>
+                        <button class="delete">삭제</button>
+                    </div>
                 </div>
                 <div class="post-main">
-                    <div class="post-image">${imageUrls}</div>
+                    <div class="post-image">${imagesHtml}</div>
                     <div class="post-content">${content}</div>
                     <div class="post-meta">
                         <div class="likes">${likeCount}</div>
