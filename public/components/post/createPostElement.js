@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../../../utils/config.js";
+import { formatDate } from "../../../utils/function.js";
 
 export const createPostElement = ({ id, title, thumbnailUrl, authorNickname, authorProfileImageUrl, createdAt, updatedAt, viewCount, likeCount, commentCount }) => {
     const container = document.createElement('div');
@@ -6,11 +7,7 @@ export const createPostElement = ({ id, title, thumbnailUrl, authorNickname, aut
     container.dataset.id = id;
 
     // 작성날짜 형태 맞춤
-    const formattedDate = new Date(createdAt).toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-    }).replace(/ /g, '');
+    const formattedDate = formatDate(createdAt);
 
     // 프로필 이미지 경로 조합
     const profileImageUrl = authorProfileImageUrl?`${API_BASE_URL}${authorProfileImageUrl}`:'/assests/profile-default.png'

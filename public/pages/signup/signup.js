@@ -85,7 +85,6 @@ signupButton.addEventListener('click', async () => {
             nickname: nickname,
         };
 
-
         try {
             const response = await fetch(`${API_BASE_URL}/api/v1/users/signup`, {
                 method: 'POST',

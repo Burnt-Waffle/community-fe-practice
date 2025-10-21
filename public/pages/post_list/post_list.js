@@ -71,7 +71,8 @@ const appendPosts = (posts) => {
     posts.forEach(postData => {
         const postElement = createPostElement(postData);
         postElement.addEventListener('click', () => {
-            alert('게시물 상세 페이지로 이동');
+            const postId = postElement.dataset.postId;
+            window.location.href = `/public/pages/post_detail/post_detail.html?id=${postId}`;
         });
         postListContainer.appendChild(postElement);
     });
