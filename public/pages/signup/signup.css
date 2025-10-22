@@ -96,3 +96,8 @@
 #signup-button:hover {
     background-color: #57834E;
 }
+
+#signup-button:disabled {
+    background-color: #A9A9A9;
+    cursor: not-allowed;
+}

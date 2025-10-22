@@ -17,7 +17,7 @@ export function validatePassword(password) {
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).*$/;
     if (!passwordPattern.test(password)) {
-        return '대문자, 소문자, 숫자, 특수문자가 각각 최소 1개를 포함해야 합니다.';
+        return '대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.';
     }
     return null;
 }
