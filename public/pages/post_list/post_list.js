@@ -1,10 +1,10 @@
 import { loadHeader } from '../../components/header/header.js';
 import { fetchPosts } from '/api/postRequest.js'
-import { createPostElement } from '../../components/post/createPostListElement.js';
+import { createPostListElement } from '../../components/post/createPostListElement.js';
 
 let nextPage = 0;
 const pageSize = 30;
-let isLast = false;
+let isLastPage = false;
 let isLoading = false;
 
 // DOM이 완전히 로드된 후에 실행
@@ -22,7 +22,7 @@ const loadInitialPosts = async () => {
     try {
         const posts = await fetchPosts({ page: 0, size: pageSize });
         nextPage = posts.number + 1;
-        isLast = posts.last;
+        isLastPage = posts.last;
         setPostList(posts.content);
     } catch (err) {
         console.error(err);
@@ -69,7 +69,7 @@ const setPostList = (posts) => {
 const appendPosts = (posts) => {
     const postListContainer = document.getElementById('post-list');
     posts.forEach(postData => {
-        const postElement = createPostElement(postData);
+        const postElement = createPostListElement(postData);
         postElement.addEventListener('click', () => {
             const postId = postElement.dataset.id;
             window.location.href = `/public/pages/post_detail/post_detail.html?id=${postId}`;

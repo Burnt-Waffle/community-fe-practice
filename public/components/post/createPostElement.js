@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "../../../utils/config.js";
 import { formatDate } from "../../../utils/function.js";
 
-export const createPostDetail = ({ id, title, content, thumbnailUrl, imageUrls, authorNickname, authorProfileImageUrl,
+export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls, authorNickname, authorProfileImageUrl,
     createdAt, updatedAt, viewCount, likeCount, commentCount, }) => {
     const container = document.createElement('div');
     container.className = 'post-detail-container';
@@ -33,9 +33,9 @@ export const createPostDetail = ({ id, title, content, thumbnailUrl, imageUrls, 
                     <div class="post-image">${imagesHtml}</div>
                     <div class="post-content">${content}</div>
                     <div class="post-meta">
-                        <div class="likes">${likeCount}</div>
-                        <div class="comments">${commentCount}</div>
-                        <div class="views">${viewCount}</div>
+                        <div class="likes">좋아요: ${likeCount}</div>
+                        <div class="comments">댓글: ${commentCount}</div>
+                        <div class="views">조회수: ${viewCount}</div>
                     </div>
                 </div>
     `

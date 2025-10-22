@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "../../../utils/config.js";
 import { formatDate } from "../../../utils/function.js";
 
-export const createPostElement = ({ id, title, thumbnailUrl, authorNickname, authorProfileImageUrl, createdAt, updatedAt, viewCount, likeCount, commentCount }) => {
+export const createPostListElement = ({ id, title, thumbnailUrl, authorNickname, authorProfileImageUrl, createdAt, updatedAt, viewCount, likeCount, commentCount }) => {
     const container = document.createElement('div');
     container.className = 'post-container';
     container.dataset.id = id;

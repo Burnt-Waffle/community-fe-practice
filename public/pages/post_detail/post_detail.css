@@ -1,0 +1,213 @@
+.main-content {
+    padding: 20px;
+}
+
+.post-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #eee;
+}
+
+.author-profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #394648;
+    margin-right: 10px;
+}
+
+.author {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.post-date {
+    font-size: 14px;
+    color: #888;
+    margin-left: 15px;
+}
+
+.buttons {
+    margin-left: auto;
+}
+
+.edit,
+.delete {
+    background: none;
+    border: 1px solid #CBAC88;
+    color: #394648;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.edit:hover,
+.delete:hover {
+    background-color: #F8E9E9;
+}
+
+.post-main {
+    padding: 10px 0;
+}
+
+.post-image {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.post-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    height: auto;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 300px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #CBAC88;
+    border-bottom: 1px solid #CBAC88;
+    background-color: #fdfaf9;
+}
+
+.likes, .comments, .views {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #394648;
+}
+
+.meta-icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.comment-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.comment-input-box {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #CBAC88;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #394648;
+    resize: none;
+}
+
+.comment-content:focus {
+    outline: none;
+    border-color: #EDB6A3;
+    box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
+}
+
+.comment-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #69995D;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.comment-button:hover {
+    background-color: #57834E;
+}
+
+/* --- 댓글 목록 --- */
+.comment-list {
+    margin-top: 40px;
+    border-top: 2px solid #394648;
+}
+
+/* 개별 댓글 컨테이너 */
+.comment-container {
+    display: flex;
+    gap: 15px;
+    padding: 20px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #394648;
+}
+
+.comment-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.comment-author {
+    font-size: 15px;
+    font-weight: 600;
+    /* color: #394648; */
+}
+
+.comment-date {
+    font-size: 12px;
+    color: #888;
+    margin-left: 10px;
+}
+
+.comment-content {
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+}
+
+.comment-edit,
+.comment-delete {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 8px;
+    padding: 2px 4px;
+}
+
+.comment-edit:hover,
+.comment-delete:hover {
+    text-decoration: underline;
+    color: #394648;
+}
