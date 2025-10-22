@@ -2,7 +2,8 @@ import { loadHeader } from '../../components/header/header.js';
 import { fetchPost } from '../../../api/postRequest.js';
 import { fetchcomments } from '../../../api/commentRequest.js';
 import { createPostElement } from '../../components/post/createPostElement.js';
-import { createCommentElement } from '../../components/comment/createCommentElement.js'; 
+import { createCommentElement } from '../../components/comment/createCommentElement.js';
+import { postComment } from '../../../api/commentRequest.js';
 
 let nextPage = 0;
 const pageSize = 10;
@@ -11,6 +12,10 @@ let isLoading = false;
 let currentPostId = null;
 
 const loadMoreButton = document.getElementById('load-more-button');
+const commentInputBox = document.getElementById('comment-input-box');
+const commentPostButton = document.getElementById('comment-button');
+const charCounter = document.getElementById('char-counter');
+const MAX_COMMENT_LENGTH = 200;
 const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -24,11 +29,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Post ID not found in URL.')
         document.body.innerHTML = '<h1>게시물을 찾을 수 없습니다.</h1>'
     }
-});
 
-loadMoreButton.addEventListener('click', () => {
-    loadComments(currentPostId);
-})
+    loadMoreButton.addEventListener('click', () => loadComments(currentPostId));
+    commentPostButton.addEventListener('click', () => handlePostComment(currentPostId));
+    commentInputBox.addEventListener('input', updateCommentButtonState);
+    updateCommentButtonState();
+});
 
 const loadPost = async (postId) => {
     try {
@@ -49,7 +55,7 @@ const loadComments = async (postId) => {
     isLoading = true;
 
     try {
-        const commentData = await fetchcomments(postId, {page: nextPage, size: pageSize});
+        const commentData = await fetchcomments(postId, { page: nextPage, size: pageSize });
         isLastPage = commentData.last;
         nextPage = commentData.number + 1;
         appendComments(commentData.content);
@@ -59,7 +65,7 @@ const loadComments = async (postId) => {
         } else {
             loadMoreButton.style.display = 'block';
         }
-        
+
     } catch (error) {
         console.error('댓글 로딩 중 에러 발생', error);
     } finally {
@@ -72,4 +78,37 @@ const appendComments = (comments) => {
         const commentElement = createCommentElement(comment);
         commentListContainer.appendChild(commentElement);
     });
+};
+
+const updateCommentButtonState = () => {
+    const currentLength = commentInputBox.value.length;
+    const contentTrimmed = commentInputBox.value.trim();
+
+    charCounter.textContent = `${currentLength} / ${MAX_COMMENT_LENGTH}`;
+
+    if (contentTrimmed.length === 0) {
+        commentPostButton.disabled = true;
+    } else {
+        commentPostButton.disabled = false;
+    }
+};
+
+const handlePostComment = async (postId) => {
+    const content = commentInputBox.value;
+
+    if (content.trim().length === 0) {
+        alert('댓글 내용을 입력해주세요.')
+        return;
+    }
+
+    try {
+        await postComment(postId, content);
+        alert('댓글이 성공적으로 등록되었습니다.');
+        commentInputBox.value='';
+        updateCommentButtonState();
+        window.location.reload();
+    } catch (error) {
+        console.error('댓글 등록 실패:', error);
+        alert(`댓글 등록에 실패했습니다. ${error.message}`);
+    }
 };
