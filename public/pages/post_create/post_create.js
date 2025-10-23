@@ -7,6 +7,8 @@ const contentInput = document.getElementById('post-content');
 const imageInput = document.getElementById('post-images');
 const previewContainer = document.getElementById('image-preview-container');
 const submitButton = document.getElementById('submit-button');
+const charCounter = document.getElementById('content-char-counter');
+const MAX_POST_LENGTH = 10000;
 
 document.addEventListener('DOMContentLoaded' , async () => {
     loadHeader({ showBackButton: true });
@@ -54,9 +56,12 @@ form.addEventListener('submit', async (event) => {
 
 const updateSubmitButtonState = () => {
     const title = titleInput.value.trim();
-    const content = contentInput.value.trim();
+    const content = contentInput.value;
 
-    if (title.length > 0 && content.length > 0) {
+    const currentLength = content.length;
+    charCounter.textContent = `${currentLength} / ${MAX_POST_LENGTH}`;
+
+    if (title.length > 0 && content.trim().length > 0) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;

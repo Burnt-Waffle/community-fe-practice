@@ -45,6 +45,20 @@
     min-height: 200px;
 }
 
+/* [추가] textarea와 카운터를 세로로 묶는 래퍼 */
+.textarea-wrapper {
+    display: flex;
+    flex-direction: column; /* 세로로 쌓음 */
+}
+
+/* [추가] 글자 수 카운터 스타일 */
+.char-counter {
+    font-size: 14px;
+    color: #888;
+    text-align: right; /* 오른쪽 정렬 */
+    margin-top: 5px;
+}
+
 /* 파일 업로드 버튼 */
 .input-group input[type="file"] {
     font-size: 14px;
