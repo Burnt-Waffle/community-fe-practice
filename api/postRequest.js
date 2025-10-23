@@ -1,8 +1,10 @@
 import { authFetch } from "./authClient.js";
 
+const postAPIUrl = '/api/v1/posts' 
+
 export const fetchPosts = async (options = {}) => {
     const config = {page: 0, size: 30, ...options};
-    const response = await authFetch(`/api/v1/posts?page=${config.page}&size=${config.size}`, {
+    const response = await authFetch(`${postAPIUrl}?page=${config.page}&size=${config.size}`, {
         method: 'GET'
     })
     const data = await response.json();
@@ -10,7 +12,7 @@ export const fetchPosts = async (options = {}) => {
 }
 
 export const fetchPost = async (postId) => {
-    const response = await authFetch(`/api/v1/posts/${postId}`, {
+    const response = await authFetch(`${postAPIUrl}/${postId}`, {
         method: 'GET'
     })
     const data = await response.json();
@@ -18,9 +20,23 @@ export const fetchPost = async (postId) => {
 }
 
 export const toggleLike = async (postId) => {
-    const response = await authFetch(`/api/v1/posts/${postId}/like`, {
+    const response = await authFetch(`${postAPIUrl}/${postId}/like`, {
         method: 'POST'
     });
     const data = await response.json();
+    return data;
+}
+
+export const createPost = async (title, content) => {
+    const postData = {
+        title: title,
+        content: content,
+    };
+    const response = await authFetch(`${postAPIUrl}`, {
+        method: 'POST',
+        body: JSON.stringify(postData)
+    });
+    const data = await response.json();
+
     return data;
 }

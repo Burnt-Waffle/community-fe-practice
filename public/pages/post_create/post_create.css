@@ -1,0 +1,100 @@
+.main-content {
+    padding: 40px 100px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #394648;
+}
+
+/* 입력 필드 그룹 */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #394648;
+}
+
+.input-group input[type="text"],
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #CBAC88;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #394648;
+    font-family: 'Helvetica', sans-serif;
+}
+
+.input-group input[type="text"]:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #EDB6A3;
+    box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
+}
+
+.input-group textarea {
+    resize: none;
+    min-height: 200px;
+}
+
+/* 파일 업로드 버튼 */
+.input-group input[type="file"] {
+    font-size: 14px;
+    color: #394648;
+}
+
+/* 이미지 미리보기 컨테이너 */
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap; /* 이미지가 많아지면 다음 줄로 */
+    gap: 10px;
+    margin-top: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 10px;
+    min-height: 80px;
+    background-color: #fdfaf9;
+}
+
+.image-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* 완료 버튼 */
+.buttons {
+    margin-top: 20px;
+}
+
+#submit-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #69995D;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#submit-button:hover {
+    background-color: #57834E;
+}
+
+#submit-button:disabled {
+    background-color: #A9A9A9;
+    cursor: not-allowed;
+}

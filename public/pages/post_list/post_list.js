@@ -2,6 +2,8 @@ import { loadHeader } from '../../components/header/header.js';
 import { fetchPosts } from '/api/postRequest.js'
 import { createPostListElement } from '../../components/post/createPostListElement.js';
 
+const createPostButton = document.getElementById('create-post-button');
+
 let nextPage = 0;
 const pageSize = 30;
 let isLastPage = false;
@@ -10,6 +12,7 @@ let isLoading = false;
 // DOM이 완전히 로드된 후에 실행
 document.addEventListener('DOMContentLoaded', async () => {
     loadHeader({ showBackButton: false });
+    createPostButton.addEventListener('click', handleCreatePost)
     loadInitialPosts();
     window.addEventListener('scroll', handleScroll);
 });
@@ -76,4 +79,9 @@ const appendPosts = (posts) => {
         });
         postListContainer.appendChild(postElement);
     });
+}
+
+// 게시글 작성 페이지로 이동
+const handleCreatePost = () => {
+    window.location.href = '/public/pages/post_create/post_create.html';
 }

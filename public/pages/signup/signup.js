@@ -47,6 +47,7 @@ fileInput.addEventListener('change', (event) => {
     }
 })
 
+// 유효성 검사
 const validateAllFields = () => {
     const isEmailValid = !validateEmail(emailInput.value);
     const isPasswordValid = !validatePassword(passwordInput.value);
@@ -56,6 +57,7 @@ const validateAllFields = () => {
     return isEmailValid && isPasswordValid && isPasswordConfirmValid && isNicknameValid;
 }
 
+// 버튼 활성화
 const updateSignupButtonState = () => {
     signupButton.disabled = !validateAllFields();
 }
