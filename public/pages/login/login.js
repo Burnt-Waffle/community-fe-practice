@@ -1,9 +1,9 @@
 import { API_BASE_URL } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
 
+const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('id');
 const passwordInput = document.getElementById('pw');
-const loginButton = document.getElementById('login-button');
 const helperText = document.getElementById('helper');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // 로그인 버튼의 이벤트 리스너
-loginButton.addEventListener('click', async () => {
+loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
     // 입력된 이메일과 비밀번호 값 가져옴
     const email = emailInput.value;
     const password = passwordInput.value;
