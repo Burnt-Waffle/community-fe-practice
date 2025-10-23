@@ -25,11 +25,11 @@
 #create-post-button {
     padding: 10px 40px;
     border: none;
-    border-radius: 15px;
+    border-radius: 4px;
     background-color: #69995D;
     color: white;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s;
 }
