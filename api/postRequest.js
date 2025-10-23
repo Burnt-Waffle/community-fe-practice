@@ -16,3 +16,11 @@ export const fetchPost = async (postId) => {
     const data = await response.json();
     return data;
 }
+
+export const toggleLike = async (postId) => {
+    const response = await authFetch(`/api/v1/posts/${postId}/like`, {
+        method: 'POST'
+    });
+    const data = await response.json();
+    return data;
+}

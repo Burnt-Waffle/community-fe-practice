@@ -91,7 +91,15 @@
     background-color: #fdfaf9;
 }
 
-.likes, .comments, .views {
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    
+    /* 기존 .likes 스타일을 가져옵니다. */
     display: flex;
     align-items: center;
     font-size: 16px;
@@ -99,9 +107,21 @@
     color: #394648;
 }
 
-.meta-icon {
-    font-size: 20px;
-    margin-right: 8px;
+.like-button:hover {
+    background-color: #F8E9E9;
+}
+
+.like-button.liked {
+    color: #E53935;
+    font-weight: bold;
+}
+
+.likes, .comments, .views {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #394648;
 }
 
 .comment-input {

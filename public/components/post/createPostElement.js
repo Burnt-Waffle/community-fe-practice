@@ -2,7 +2,7 @@ import { API_BASE_URL } from "../../../utils/config.js";
 import { formatDate } from "../../../utils/function.js";
 
 export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls, authorNickname, authorProfileImageUrl,
-    createdAt, updatedAt, viewCount, likeCount, commentCount, }) => {
+    createdAt, updatedAt, viewCount, likeCount, commentCount, likedByCurrentUser }) => {
     const container = document.createElement('div');
     container.className = 'post-detail-container';
     container.dataset.id = id;
@@ -17,6 +17,8 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
     }
 
     const imagesHtml = imageUrls.map(url => `<img src="${API_BASE_URL}${url}" alt="게시물 이미지"`).join()
+
+    const likedClass = likedByCurrentUser ? 'liked' : '';
 
     container.innerHTML = `
         <h3 class="post-title">${title}</h3>
@@ -33,7 +35,9 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
                     <div class="post-image">${imagesHtml}</div>
                     <div class="post-content">${content}</div>
                     <div class="post-meta">
-                        <div class="likes">좋아요: ${likeCount}</div>
+                        <button class="like-button ${likedClass}" id="like-button">
+                            <span class="count" id="like-count">좋아요: ${likeCount}</span>
+                        </button>
                         <div class="comments">댓글: ${commentCount}</div>
                         <div class="views">조회수: ${viewCount}</div>
                     </div>

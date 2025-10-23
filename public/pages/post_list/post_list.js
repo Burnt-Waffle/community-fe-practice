@@ -35,13 +35,13 @@ const loadInitialPosts = async () => {
 
 // 추가 게시글 로드
 const loadMorePosts = async () => {
-    if (isLoading || isLast) return;
+    if (isLoading || isLastPage) return;
     isLoading = true;
 
     try {
         const posts = await fetchPosts({page: nextPage, size: pageSize});
         nextPage = posts.number + 1;
-        isLast = posts.last;
+        isLastPage = posts.last;
         appendPosts(posts.content);
     } catch (err) {
         console.error(err);

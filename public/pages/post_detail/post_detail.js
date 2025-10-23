@@ -1,5 +1,5 @@
 import { loadHeader } from '../../components/header/header.js';
-import { fetchPost } from '../../../api/postRequest.js';
+import { fetchPost, toggleLike } from '../../../api/postRequest.js';
 import { fetchcomments } from '../../../api/commentRequest.js';
 import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
@@ -15,7 +15,7 @@ const loadMoreButton = document.getElementById('load-more-button');
 const commentInputBox = document.getElementById('comment-input-box');
 const commentPostButton = document.getElementById('comment-button');
 const charCounter = document.getElementById('char-counter');
-const MAX_COMMENT_LENGTH = 200;
+const MAX_COMMENT_LENGTH = 2000;
 const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -43,6 +43,11 @@ const loadPost = async (postId) => {
         const postPlaceholder = document.querySelector('.post-placeholder')
         postPlaceholder.innerHTML = '';
         postPlaceholder.appendChild(post)
+
+        const likeButton = document.getElementById('like-button');
+        if(likeButton) {
+            likeButton.addEventListener('click', () => handleLikeClick(postId));
+        }
     } catch (err) {
         console.error(err);
         document.getElementById('post-placeholder').innerHTML =
@@ -103,12 +108,28 @@ const handlePostComment = async (postId) => {
 
     try {
         await postComment(postId, content);
-        alert('댓글이 성공적으로 등록되었습니다.');
         commentInputBox.value='';
         updateCommentButtonState();
         window.location.reload();
     } catch (error) {
         console.error('댓글 등록 실패:', error);
         alert(`댓글 등록에 실패했습니다. ${error.message}`);
+    }
+};
+
+const handleLikeClick = async(postId) => {
+    try {
+        const result = await toggleLike(postId);
+
+        const likeCountElement = document.getElementById('like-count');
+        const likeButton = document.getElementById('like-button');
+
+        if (!likeButton || !likeCountElement) return;
+
+        likeCountElement.textContent = `좋아요: ${result.likeCount}`;
+        likeButton.classList.toggle('liked', result.isLikedByCurrentUser);
+    } catch (error) {
+        console.error('좋아요 처리 실패:', error);
+        alert(`좋아요 처리에 실패했습니다: ${error.message}`);
     }
 };
