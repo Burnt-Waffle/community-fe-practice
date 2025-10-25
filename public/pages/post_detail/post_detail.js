@@ -126,7 +126,7 @@ const handleLikeClick = async(postId) => {
 
         if (!likeButton || !likeCountElement) return;
 
-        likeCountElement.textContent = `좋아요: ${result.likeCount}`;
+        likeCountElement.textContent = `좋아요 ${result.likeCount}`;
         likeButton.classList.toggle('liked', result.isLikedByCurrentUser);
     } catch (error) {
         console.error('좋아요 처리 실패:', error);

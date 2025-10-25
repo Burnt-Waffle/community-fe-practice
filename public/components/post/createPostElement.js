@@ -27,8 +27,8 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
                     <div class="author">${authorNickname}</div>
                     <div class="post-date">${formattedDate}</div>
                     <div class="buttons">
-                        <button class="edit">수정</button>
-                        <button class="delete">삭제</button>
+                        <button class="post-manage-button" id="edit">수정</button>
+                        <button class="post-manage-button" id="delete">삭제</button>
                     </div>
                 </div>
                 <div class="post-main">
@@ -36,10 +36,10 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
                     <div class="post-content">${content}</div>
                     <div class="post-meta">
                         <button class="like-button ${likedClass}" id="like-button">
-                            <span class="count" id="like-count">좋아요: ${likeCount}</span>
+                            <span class="count" id="like-count">좋아요 ${likeCount}</span>
                         </button>
-                        <div class="comments">댓글: ${commentCount}</div>
-                        <div class="views">조회수: ${viewCount}</div>
+                        <div class="comments">댓글수 ${commentCount}</div>
+                        <div class="views">조회수 ${viewCount}</div>
                     </div>
                 </div>
     `

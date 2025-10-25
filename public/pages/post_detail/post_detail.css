@@ -38,8 +38,7 @@
     margin-left: auto;
 }
 
-.edit,
-.delete {
+.post-manage-button {
     background: none;
     border: 1px solid #CBAC88;
     color: #394648;
@@ -51,8 +50,7 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.edit:hover,
-.delete:hover {
+.post-manage-button:hover {
     background-color: #F8E9E9;
 }
 
@@ -84,6 +82,7 @@
 .post-meta {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 40px;
     padding: 20px 0;
     border-top: 1px solid #CBAC88;
@@ -91,37 +90,33 @@
     background-color: #fdfaf9;
 }
 
-.like-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 8px;
-    transition: background-color 0.2s;
-    
-    /* 기존 .likes 스타일을 가져옵니다. */
+.like-button,
+.comments,
+.views {
     display: flex;
     align-items: center;
     font-size: 16px;
     font-weight: 600;
     color: #394648;
+    border: none;
+}
+
+.like-button {
+    background: none;
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .like-button:hover {
     background-color: #F8E9E9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .like-button.liked {
     color: #E53935;
     font-weight: bold;
-}
-
-.likes, .comments, .views {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: #394648;
 }
 
 .comment-input {
@@ -248,5 +243,5 @@
 
 .comment-button:disabled {
     background-color: #A9A9A9;
-    cursor: not-allowed; 
+    cursor: not-allowed;
 }
