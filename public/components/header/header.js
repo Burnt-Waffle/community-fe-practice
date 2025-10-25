@@ -1,3 +1,5 @@
+import { logoutUser } from "../../../api/authClient.js";
+
 export const loadHeader = async (options = {}) => {
     const config = {showBackButton: true, ...options};
 
@@ -50,10 +52,8 @@ export const loadHeader = async (options = {}) => {
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 // 로그아웃 시 로컬 스토리지에서 토큰 제거
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                alert('로그아웃 되었습니다.');
-                window.location.href = '/public/pages/login/login.html';
+                confirm('정말 로그아웃 하시겠습니까?')
+                logoutUser();
             });
         }
 
