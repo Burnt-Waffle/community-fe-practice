@@ -1,5 +1,5 @@
 import { loadHeader } from '../../components/header/header.js';
-import { fetchPost, toggleLike } from '../../../api/postRequest.js';
+import { fetchPost, toggleLike, deletePost } from '../../../api/postRequest.js';
 import { fetchcomments } from '../../../api/commentRequest.js';
 import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         console.error('Post ID not found in URL.')
         document.body.innerHTML = '<h1>게시물을 찾을 수 없습니다.</h1>'
-    }
-
+    }    
     loadMoreButton.addEventListener('click', () => loadComments(currentPostId));
     commentPostButton.addEventListener('click', () => handlePostComment(currentPostId));
     commentInputBox.addEventListener('input', updateCommentButtonState);
@@ -37,12 +36,37 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 const loadPost = async (postId) => {
+    const postPlaceholder = document.getElementById('post-placeholder');
+
     try {
         const postData = await fetchPost(postId);
-        const post = createPostElement(postData);
-        const postPlaceholder = document.querySelector('.post-placeholder')
+        const postElement = createPostElement(postData);
         postPlaceholder.innerHTML = '';
-        postPlaceholder.appendChild(post)
+        postPlaceholder.appendChild(postElement);
+
+        const editButton = document.getElementById('edit');
+        const deleteButton = document.getElementById('delete');
+
+        if (editButton && deleteButton) {
+
+            if (postData.author) {
+                editButton.style.display = 'inline-block';
+                deleteButton.style.display = 'inline-block';
+            } else {
+                editButton.style.display = 'none';
+                deleteButton.style.display = 'none';
+            }
+
+            editButton.addEventListener('click', () => {
+                window.location.href = `/public/pages/post_edit/post_edit.html?id=${postId}`;
+            });
+
+            deleteButton.addEventListener('click', () => {
+                handleDeletePost(postId); 
+            });
+        } else {
+             console.error("수정 또는 삭제 버튼을 찾을 수 없습니다. HTML 구조나 선택자를 확인하세요.");
+        }
 
         const likeButton = document.getElementById('like-button');
         if(likeButton) {
@@ -133,3 +157,16 @@ const handleLikeClick = async(postId) => {
         alert(`좋아요 처리에 실패했습니다: ${error.message}`);
     }
 };
+
+const handleDeletePost = async(postId) => {
+    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+        try {
+            deletePost(postId);
+            alert('게시글이 삭제되었습니다.');
+            window.location.href = '/public/pages/post_list/post_list.html';
+        } catch (error) {
+            console.error('게시글 삭제 실패:', error);
+            alert(`게시글 삭제에 실패했습니다: ${error.message}`);
+        }
+    }
+}
