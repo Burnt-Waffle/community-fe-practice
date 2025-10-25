@@ -13,7 +13,7 @@ const emailInput = document.getElementById('id');
 const passwordInput = document.getElementById('pw');
 const passwordConfirmInput = document.getElementById('pw-confirm');
 const nicknameInput = document.getElementById('nickname');
-const signupButton = document.getElementById('signup-button');
+const signupButton = document.getElementById('submit-button');
 
 const emailHelper = document.getElementById('email-helper');
 const passwordHelper = document.getElementById('password-helper');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateSignupButtonState();
 });
 
-// 프로필 미리보기 이미지를 누르면 fileInput이 누른 것으로 간주
+// 프로필 미리보기 이미지를 누르면 fileInput을 누른 것으로 간주
 imagePreview.addEventListener('click', () => {
     fileInput.click();
 });
@@ -80,7 +80,7 @@ nicknameInput.addEventListener('blur', () => {
     nicknameHelper.textContent = errorMessage || '';
 });
 
-// 키도드 입력할 때마다 버튼 상태 업데이트
+// 키보드 입력할 때마다 버튼 상태 업데이트
 [emailInput, passwordInput, passwordConfirmInput, nicknameInput].forEach(input => {
     input.addEventListener('input', updateSignupButtonState);
 });

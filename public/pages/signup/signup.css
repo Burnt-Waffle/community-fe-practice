@@ -1,5 +1,5 @@
 /* '회원가입' 제목 스타일 */
-.signup-text {
+.text {
     text-align: center;
     font-size: 24px;
     margin-bottom: 30px;
@@ -11,7 +11,7 @@
 }
 
 /* 입력 필드 (이메일, 비밀번호) */
-.signup-input {
+.input {
     margin-bottom: 20px;
 }
 
@@ -44,7 +44,7 @@
 }
 
 /* '이메일', '비밀번호' */
-.signup-input label {
+.input label {
     display: block;
     margin-bottom: 8px;
     font-size: 18px;
@@ -53,7 +53,7 @@
 }
 
 /* input 태그 */
-.signup-input input {
+.input input {
     width: 100%;
     padding: 12px;
     border: 1px solid #CBAC88;
@@ -63,7 +63,7 @@
 }
 
 /* input 태그에 포커스 되었을 때 */
-.signup-input input:focus {
+.input input:focus {
     outline: none;
     border-color: #EDB6A3;
     box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
@@ -79,7 +79,7 @@
 }
 
 /* 회원가입 버튼 */
-#signup-button {
+#submit-button {
     width: 100%;
     padding: 12px;
     border: none;
@@ -93,11 +93,32 @@
 }
 
 /* 회원가입 버튼에 마우스를 올렸을 때 */
-#signup-button:hover {
+#submit-button:hover {
     background-color: #57834E;
 }
 
-#signup-button:disabled {
+#submit-button:disabled {
     background-color: #A9A9A9;
     cursor: not-allowed;
+}
+
+/* 회원정보수정 페이지에서 사용 */
+.buttons a {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: #EDB6A3;
+    font-size: 15px;
+}
+
+.buttons a:hover {
+    text-decoration: underline;
+}
+
+.user-email{
+    font-size: 18px;
+    color: #555;
+    padding: 12px 0;
+    line-height: 1.4;
 }

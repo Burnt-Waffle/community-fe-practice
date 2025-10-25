@@ -95,7 +95,7 @@ const refreshToken = async () => {
     } catch (error) {
         console.error('Token refresh error:', error);
         // 갱신 실패 시 로그아웃 처리
-        // logoutUser();
+        logoutUser();
         throw error;
     }
 }
