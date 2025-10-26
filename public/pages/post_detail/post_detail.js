@@ -94,7 +94,7 @@ const loadComments = async (postId) => {
         if (isLastPage) {
             loadMoreButton.style.display = 'none';
         } else {
-            loadMoreButton.style.display = 'block';
+            loadMoreButton.style.display = 'inline-block';
         }
 
     } catch (error) {

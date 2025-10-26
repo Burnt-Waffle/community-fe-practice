@@ -156,7 +156,7 @@
     box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
 }
 
-.comment-button {
+.comment-submit-button {
     padding: 12px 20px;
     border: none;
     border-radius: 4px;
@@ -168,8 +168,13 @@
     transition: background-color 0.2s;
 }
 
-.comment-button:hover {
+.comment-submit-button:hover {
     background-color: #57834E;
+}
+
+.comment-submit-button:disabled {
+    background-color: #A9A9A9;
+    cursor: not-allowed;
 }
 
 /* --- 댓글 목록 --- */
@@ -242,7 +247,29 @@
     color: #394648;
 }
 
-.comment-button:disabled {
-    background-color: #A9A9A9;
-    cursor: not-allowed;
+.load-more-container {
+    text-align: center;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.load-more-button {
+    padding: 10px 25px;
+    border: 1px solid #69995D;
+    border-radius: 20px;
+    background-color: #ffffff; 
+    color: #69995D;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, transform 0.1s;
+}
+
+.load-more-button:hover {
+    background-color: #69995D;
+    color: white;
+}
+
+.load-more-button:active {
+    transform: scale(0.98);
 }
