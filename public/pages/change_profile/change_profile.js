@@ -7,8 +7,8 @@ import { loadHeader } from "../../components/header/header.js";
 const imagePreview = document.getElementById('profile-image-button');
 const fileInput = document.getElementById('profile-image-upload');
 const nicknameInput = document.getElementById('nickname');
-const submitButton = document.getElementById('submit-button');
 const nicknameHelper = document.getElementById('nickname-helper');
+const submitButton = document.getElementById('submit-button');
 const deleteButton = document.getElementById('delete-account-button');
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -72,7 +72,7 @@ const updateSubmitButtonState = () => {
 // 키보드 입력할 때마다 버튼 상태 업데이트
 nicknameInput.addEventListener('input', updateSubmitButtonState);
 
-// 수정완료 버튼 클릭
+// 수정하기 버튼 클릭
 submitButton.addEventListener('click', async () => {
     const nicknameError = validateNickname(nicknameInput.value);
     if (nicknameError) {
