@@ -87,7 +87,7 @@ submitButton.addEventListener('click', async () => {
     };
 
     try {
-        const response = await authFetch(`${API_BASE_URL}/api/v1/users/me`, {
+        const response = await authFetch(`/api/v1/users/me`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -96,14 +96,15 @@ submitButton.addEventListener('click', async () => {
         });
         if (response.ok) {
             alert('회원정보수정 성공!');
+            location.replace(location.href)
         } else {
             const errorData = await response.json();
-            alert(errorData.message || '회원정보수정에 실패했습니다.');
+            nicknameHelper.textContent = errorData.message;
         }
     } catch (error) {
-        console.error('Signup Error:', error);
-        alert('회원정보수정 중 문제가 발생했습니다.');
+        console.error('Change User Info Error:', error);
+        nicknameHelper.textContent = error.message;
     } finally {
         submitButton.disabled = false;
-    }
+    };
 });
