@@ -103,22 +103,26 @@
 }
 
 /* 회원정보수정 페이지에서 사용 */
-.buttons a {
-    display: block;
-    margin-top: 15px;
-    text-align: center;
-    text-decoration: none;
-    color: #EDB6A3;
-    font-size: 15px;
-}
-
-.buttons a:hover {
-    text-decoration: underline;
-}
-
 .user-email{
     font-size: 18px;
     color: #555;
     padding: 12px 0;
     line-height: 1.4;
+}
+
+.delete-link {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #EDB6A3;
+    font-size: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+}
+
+.delete-link:hover {
+    text-decoration: underline;
 }

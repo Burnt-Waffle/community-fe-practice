@@ -1,6 +1,6 @@
-import { authFetch } from "../../../api/authClient.js";
+import { authFetch, logoutUser } from "../../../api/authClient.js";
 import { API_BASE_URL } from "../../../utils/config.js";
-import { fetchCurrentUser } from "../../../api/userRequest.js";
+import { fetchCurrentUser, deleteCurrentUser } from "../../../api/userRequest.js";
 import { validateNickname } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
 
@@ -9,6 +9,7 @@ const fileInput = document.getElementById('profile-image-upload');
 const nicknameInput = document.getElementById('nickname');
 const submitButton = document.getElementById('submit-button');
 const nicknameHelper = document.getElementById('nickname-helper');
+const deleteButton = document.getElementById('delete-account-button');
 
 document.addEventListener('DOMContentLoaded', async () => {
     loadHeader({ showBackButton: true });
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateSubmitButtonState();
 });
 
-const loadUserData = async() => {
+const loadUserData = async () => {
     try {
         const userData = await fetchCurrentUser();
 
@@ -79,7 +80,7 @@ submitButton.addEventListener('click', async () => {
         nicknameInput.focus();
         return;
     }
-    
+
     submitButton.disabled = true;
 
     const changeData = {
@@ -108,3 +109,16 @@ submitButton.addEventListener('click', async () => {
         submitButton.disabled = false;
     };
 });
+
+deleteButton.addEventListener('click', async () => {
+    if (confirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
+        try {
+            const response = await deleteCurrentUser();
+            alert('회원 탈퇴가 완료되었습니다.');
+            logoutUser();
+        } catch (error) {
+            console.error('Delete Account Error:', error);
+            alert(`회원 탈퇴 처리 중 문제가 발생했습니다. ${error.message}`);
+        }
+    }
+})

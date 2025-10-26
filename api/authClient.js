@@ -49,13 +49,11 @@ export const authFetch = async (endpoint, options = {}) => {
         } catch (refreshError) {
             // refreshToken 함수 내부 또는 재시도 요청에서 에러 발생 시
             console.error("Refresh or retry failed:", refreshError);
-            console.error(">>> authFetch caught refreshError:", refreshError);
             throw new Error('인증 갱신 또는 재시도에 실패했습니다. 다시 로그인해주세요.');
         }
     } else if (!response.ok) {
         // 401 외 다른 에러 처리
         const errorData = await response.json().catch(() => ({ message: '서버 에러 발생' }));
-        console.error(">>> authFetch caught other error:", response.status, errorData);
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
 
@@ -84,7 +82,6 @@ const refreshToken = async () => {
         });
 
         if (!response.ok) {
-            console.error(">>> refreshToken request failed with status:", response.status);
             throw new Error('Failed to refresh token.');
         }
 
@@ -97,7 +94,6 @@ const refreshToken = async () => {
 
     } catch (error) {
         console.error('Token refresh error:', error);
-        console.error('>>> refreshToken caught error:', error);
         // 갱신 실패 시 로그아웃 처리
         logoutUser();
         throw error;
