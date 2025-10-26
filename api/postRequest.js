@@ -57,6 +57,4 @@ export const deletePost = async (postId) => {
     const response = await authFetch(`${postAPIUrl}/${postId}`, {
         method: 'DELETE'
     });
-    const data = await response.json();
-    return data;
 }

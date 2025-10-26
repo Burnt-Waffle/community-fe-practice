@@ -34,7 +34,8 @@
     margin-left: 15px;
 }
 
-.buttons {
+.buttons,
+.comment-actions {
     margin-left: auto;
 }
 
@@ -224,8 +225,8 @@
     margin-bottom: 10px;
 }
 
-.comment-edit,
-.comment-delete {
+.comment-edit-button,
+.comment-delete-button {
     background: none;
     border: none;
     color: #888;
@@ -235,8 +236,8 @@
     padding: 2px 4px;
 }
 
-.comment-edit:hover,
-.comment-delete:hover {
+.comment-edit-button:hover,
+.comment-delete-button:hover {
     text-decoration: underline;
     color: #394648;
 }

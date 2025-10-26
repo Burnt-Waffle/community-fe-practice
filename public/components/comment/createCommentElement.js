@@ -2,7 +2,7 @@ import { API_BASE_URL } from "../../../utils/config.js";
 import { formatDate } from "../../../utils/function.js";
 
 export const createCommentElement = ({ id, content, postId, authorNickname,
-    authorProfileImageUrl, createdAt, updatedAt, hasChildren }) => {
+    authorProfileImageUrl, createdAt, updatedAt, author }) => {
     const container = document.createElement('div');
     container.className = 'comment-container';
     container.dataset.commentId = id;
@@ -22,14 +22,13 @@ export const createCommentElement = ({ id, content, postId, authorNickname,
             <div class="comment-info">
                 <span class="comment-author">${authorNickname}</span>
                 <span class="comment-date">${formattedDate}</span>
-                <div class="buttons">
-                    <button class="comment-edit">수정</button>
-                    <button class="comment-delete">삭제</button>
+                <div class="comment-actions">
+                    <button class="comment-edit-button">수정</button>
+                    <button class="comment-delete-button">삭제</button>
                 </div>
             </div>
             <div class="comment-content">${content}</div>
         </div>
-        
     `
 
     return container;
