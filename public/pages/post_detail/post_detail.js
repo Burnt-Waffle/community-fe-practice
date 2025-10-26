@@ -1,6 +1,6 @@
 import { loadHeader } from '../../components/header/header.js';
 import { fetchPost, toggleLike, deletePost } from '../../../api/postRequest.js';
-import { fetchcomments, deleteComment } from '../../../api/commentRequest.js';
+import { fetchcomments, deleteComment, updateComment } from '../../../api/commentRequest.js';
 import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
 import { postComment } from '../../../api/commentRequest.js';
@@ -10,6 +10,9 @@ const pageSize = 10;
 let isLastPage = false;
 let isLoading = false;
 let currentPostId = null;
+
+let isEditingComment = false;
+let editingCommentId = null;
 
 const loadMoreButton = document.getElementById('load-more-button');
 const commentInputBox = document.getElementById('comment-input-box');
@@ -30,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.innerHTML = '<h1>게시물을 찾을 수 없습니다.</h1>'
     }
     loadMoreButton.addEventListener('click', () => loadComments(currentPostId));
-    commentPostButton.addEventListener('click', () => handlePostComment(currentPostId));
+    commentPostButton.addEventListener('click', () => handleSubmitComment(currentPostId));
     commentInputBox.addEventListener('input', updateCommentButtonState);
     updateCommentButtonState();
 });
@@ -114,13 +117,11 @@ const appendComments = (comments) => {
                 editButton.style.display = 'inline-block';
                 deleteButton.style.display = 'inline-block';
 
-                // 수정 버튼 클릭 시 동작 (예: 수정 폼 보여주기)
                 editButton.addEventListener('click', () => {
                     console.log(`Edit comment ID: ${commentData.id}`);
-                    // TODO: 댓글 수정 UI 로직 구현
+                    handleEditComment(commentData.id, commentData.content);
                 });
 
-                // 삭제 버튼 클릭 시 동작 (예: 확인 후 API 호출)
                 deleteButton.addEventListener('click', () => {
                     console.log(`Delete comment ID: ${commentData.id}`);
                     handleDeleteComment(currentPostId, commentData.id);
@@ -151,7 +152,7 @@ const updateCommentButtonState = () => {
     }
 };
 
-const handlePostComment = async (postId) => {
+const handleSubmitComment = async (postId) => {
     const content = commentInputBox.value;
 
     if (content.trim().length === 0) {
@@ -159,14 +160,25 @@ const handlePostComment = async (postId) => {
         return;
     }
 
+    commentPostButton.disabled = true;
+    const originalButtonText = commentPostButton.textContent;
+    commentPostButton.textContent = isEditingComment ? '수정 중...' : '등록 중...'
+
     try {
-        await postComment(postId, content);
+        if (isEditingComment && editingCommentId) {
+            await updateComment(postId, editingCommentId, content);
+        } else {
+            await postComment(postId, content);
+        }
         commentInputBox.value = '';
         updateCommentButtonState();
         window.location.reload();
     } catch (error) {
         console.error('댓글 등록 실패:', error);
         alert(`댓글 등록에 실패했습니다. ${error.message}`);
+        commentPostButton.textContent = originalButtonText;
+    } finally {
+        commentPostButton.disabled = false;
     }
 };
 
@@ -200,7 +212,7 @@ const handleDeletePost = async (postId) => {
     }
 };
 
-const handleDeleteComment = async(postId, commentId) => {
+const handleDeleteComment = async (postId, commentId) => {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
         try {
             await deleteComment(postId, commentId);
@@ -212,3 +224,14 @@ const handleDeleteComment = async(postId, commentId) => {
         }
     }
 };
+
+const handleEditComment = async (commentId, currentContent) => {
+    isEditingComment = true;
+    editingCommentId = commentId;
+
+    commentInputBox.value = currentContent;
+    commentInputBox.focus();
+    commentPostButton.textContent = '댓글 수정';
+
+    updateCommentButtonState();
+}
