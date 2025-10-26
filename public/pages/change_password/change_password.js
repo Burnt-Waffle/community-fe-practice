@@ -8,8 +8,8 @@ const newPasswordInput = document.getElementById('new-pw');
 const passwordConfirmInput = document.getElementById('pw-confirm');
 const submitButton = document.getElementById('submit-button');
 
-const currentpasswordHelper = document.getElementById('current-password-helper');
-const newpasswordHelper = document.getElementById('new-password-helper');
+const currentPasswordHelper = document.getElementById('current-password-helper');
+const newPasswordHelper = document.getElementById('new-password-helper');
 const passwordConfirmHelper = document.getElementById('password-confirm-helper');
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -33,11 +33,11 @@ const updateSubmitButtonState = () => {
 
 currentPasswordInput.addEventListener('blur', () => {
     const errorMessage = validatePassword(currentPasswordInput.value);
-    currentpasswordHelper.textContent = errorMessage || '';
+    currentPasswordHelper.textContent = errorMessage || '';
 });
 newPasswordInput.addEventListener('blur', () => {
     const errorMessage = validatePassword(newPasswordInput.value);
-    newpasswordHelper.textContent = errorMessage || '';
+    newPasswordHelper.textContent = errorMessage || '';
 });
 passwordConfirmInput.addEventListener('blur', () => {
     const errorMessage = validatePasswordConfirm(newPasswordInput.value, passwordConfirmInput.value);
@@ -51,6 +51,18 @@ passwordConfirmInput.addEventListener('blur', () => {
 
 // 수정하기 버튼 클릭
 submitButton.addEventListener('click', async () => {
+    const currentPwError = validatePassword(currentPasswordInput.value);
+    const newPwError = validatePassword(newPasswordInput.value);
+    const confirmPwError = validatePasswordConfirm(newPasswordInput.value, passwordConfirmInput.value);
+
+    currentPasswordHelper.textContent = currentPwError || '';
+    newPasswordHelper.textContent = newPwError || '';
+    passwordConfirmHelper.textContent = confirmPwError || '';
+
+    if (currentPwError || newPwError || confirmPwError) return;
+
+    submitButton.disabled = true;
+
     const changeData = {
         currentPassword: currentPasswordInput.value,
         newPassword: newPasswordInput.value,
@@ -66,15 +78,15 @@ submitButton.addEventListener('click', async () => {
             body: JSON.stringify(changeData)
         });
         if (response.ok) {
-            alert('회원정보수정 성공! 변경된 비밀번호로 다시 로그인 해주세요.');
+            alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 다시 로그인 해주세요.');
             logoutUser();
         } else {
             const errorData = await response.json();
-            alert(errorData.message || '비밀번호 수정에 실패했습니다.');
+            currentPasswordHelper.textContent = errorData.message || '현재 비밀번호가 틀렸습니다.';
         }
     } catch (error) {
         console.error('Change User Info Error:', error);
-        alert(errorData.message || '비밀번호 수정에 실패했습니다.');
+        currentPasswordHelper.textContent = error.message || '현재 비밀번호가 틀렸습니다.';
     } finally {
         submitButton.disabled = false;
     };
