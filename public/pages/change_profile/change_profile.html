@@ -18,28 +18,42 @@
         <h2 class="text">회원정보수정</h2>
         <main class="main-content">
             <!-- 새로운 정보 입력 -->
-                <div class="input">
-                    <label>프로필 사진</label>
-                    <div class="profile-image-preview">
-                        <img id="profile-image-button" src="/assets/profile-default.png" alt="프로필 이미지 미리보기">
+            <div class="input">
+                <label>프로필 사진</label>
+                <div class="profile-image-preview">
+                    <img id="profile-image-button" src="/assets/profile-default.png" alt="프로필 이미지 미리보기">
+                </div>
+                <input type="file" id="profile-image-upload" accept="image/*">
+            </div>
+            <div class="input">
+                <label>이메일</label>
+                <div class="user-email" id="user-email"></div>
+            </div>
+            <div class="input">
+                <label>닉네임</label>
+                <input name="nickname" id="nickname" placeholder="닉네임을 입력하세요" required>
+                <p id="nickname-helper" class="helper-text"></p>
+            </div>
+            <!-- 수정 버튼 -->
+            <div class="buttons">
+                <button id="submit-button" type="submit">수정하기</button>
+                <button id="delete-account-button" class="delete-link" type="button">회원 탈퇴</button>
+            </div>
+            <!-- 모달, 토스트 -->
+            <div id="confirmModal" class="modal-overlay">
+                <div class="modal-content">
+                    <p id="confirmMessage"></p>
+                    <div class="modal-button-container">
+                        <button id="confirmCancelButton" class="modal-button modal-button-cancel">
+                            취소
+                        </button>
+                        <button id="confirmOkButton" class="modal-button modal-button-confirm">
+                            확인
+                        </button>
                     </div>
-                    <input type="file" id="profile-image-upload" accept="image/*">
                 </div>
-                <div class="input">
-                    <label>이메일</label>
-                    <div class="user-email" id="user-email"></div>
-                </div>
-                <div class="input">
-                    <label>닉네임</label>
-                    <input name="nickname" id="nickname" placeholder="닉네임을 입력하세요" required>
-                    <p id="nickname-helper" class="helper-text"></p>
-                </div>
-                <!-- 수정 버튼 -->
-                <div class="buttons">
-                    <button id="submit-button" type="submit">수정하기</button>
-                    <button id="delete-account-button" class="delete-link" type="button">회원 탈퇴</button>
-                </div>
-                <div id="infoModal" class="modal-overlay">
+            </div>
+            <div id="infoModal" class="modal-overlay">
                 <div class="modal-content">
                     <p id="modalMessage"></p>
                     <button id="modalOkButton" class="modal-button modal-button-confirm">확인</button>

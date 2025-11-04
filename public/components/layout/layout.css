@@ -63,13 +63,10 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 
-    display: flex;
     justify-content: center;
     align-items: center;
 
     z-index: 1000; 
-    
-    display: none;
 }
 
 /* 모달 내용 (흰색 박스) */

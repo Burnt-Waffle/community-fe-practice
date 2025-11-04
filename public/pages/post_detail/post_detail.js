@@ -134,7 +134,6 @@ const appendComments = (comments) => {
                 deleteButton.style.display = 'none';
             }
         } else {
-
             console.error("댓글의 수정 또는 삭제 버튼을 찾을 수 없습니다.")
         }
 

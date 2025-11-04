@@ -114,8 +114,8 @@ submitButton.addEventListener('click', async () => {
 });
 
 deleteButton.addEventListener('click', async () => {
-    const userConfirm = await showConfirmModal('정말로 이 댓글을 삭제하시겠습니까?');
-    if (userConfirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
+    const userConfirm = await showConfirmModal('정말로 회원 탈퇴를 진행하시겠습니까?');
+    if (userConfirm) {
         try {
             const response = await deleteCurrentUser();
             await showInfoModal('회원 탈퇴가 완료되었습니다.');
@@ -125,4 +125,4 @@ deleteButton.addEventListener('click', async () => {
             showToast(`회원 탈퇴 처리 중 문제가 발생했습니다. ${error.message}`);
         }
     }
-})
+});
