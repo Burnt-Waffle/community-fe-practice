@@ -13,7 +13,7 @@ const MAX_POST_LENGTH = 10000;
 
 document.addEventListener('DOMContentLoaded' , async () => {
     await performSilentRefresh();
-    loadHeader({ showBackButton: true });
+    loadHeader({ showProfileButton: true, showBackButton: true });
     updateSubmitButtonState();
 })
 

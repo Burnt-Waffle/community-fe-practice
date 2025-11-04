@@ -1,7 +1,6 @@
 import { loadHeader } from '../../components/header/header.js';
 import { fetchPosts } from '../../../api/postRequest.js';
 import { createPostListElement } from '../../components/post/createPostListElement.js';
-import { performSilentRefresh } from '../../../utils/silentRefresh.js';
 
 const createPostButton = document.getElementById('create-post-button');
 
@@ -12,8 +11,7 @@ let isLoading = false;
 
 // DOM이 완전히 로드된 후에 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    await performSilentRefresh();
-    loadHeader({ showBackButton: false });
+    loadHeader({ showProfileButton: true, showBackButton: false });
     createPostButton.addEventListener('click', handleCreatePost)
     loadInitialPosts();
     window.addEventListener('scroll', handleScroll);

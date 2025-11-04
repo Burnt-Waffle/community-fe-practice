@@ -22,7 +22,7 @@ const nicknameHelper = document.getElementById('nickname-helper');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    loadHeader({ showBackButton: true });
+    loadHeader({ showProfileButton: false, showBackButton: true });
     updateSignupButtonState();
 });
 

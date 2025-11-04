@@ -9,7 +9,7 @@ const helperText = document.getElementById('helper');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    loadHeader({ showBackButton: false });
+    loadHeader({ showProfileButton: false, showBackButton: false });
 });
 
 // 로그인 버튼의 이벤트 리스너
@@ -45,6 +45,7 @@ loginForm.addEventListener('submit', async (event) => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
             method: 'POST',
+            credentials: 'include', // refresh cookie를 받아오기 위해 필요
             headers: {
                 'Content-Type': 'application/json'
             },

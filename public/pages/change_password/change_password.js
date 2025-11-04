@@ -14,7 +14,7 @@ const passwordConfirmHelper = document.getElementById('password-confirm-helper')
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    loadHeader({ showBackButton: true });
+    loadHeader({ showProfileButton: true, showBackButton: true });
     updateSubmitButtonState();
 });
 

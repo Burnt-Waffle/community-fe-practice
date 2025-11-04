@@ -1,7 +1,11 @@
 import { logoutUser } from "../../../api/authClient.js";
 
 export const loadHeader = async (options = {}) => {
-    const config = {showBackButton: true, ...options};
+    const config = {
+        showProfileButton: true,
+        showBackButton: true,
+        ...options
+    };
 
     const headerPlaceholder = document.getElementById('header-placeholder');
     if (!headerPlaceholder) {
@@ -26,11 +30,10 @@ export const loadHeader = async (options = {}) => {
             backButton.classList.add('hidden');
         }
         
-        // // 프로필 아이콘 숨김
-        // const accessToken = localStorage.getItem('accessToken');
-        // if (!accessToken && profileButton) {
-        //     profileButton.classList.add('hidden');
-        // }
+        // 프로필 아이콘 숨김
+        if (!config.showProfileButton && profileButton) {
+            profileButton.classList.add('hidden');
+        }
 
         // 뒤로가기 버튼 설정
         if (backButton) {
@@ -52,8 +55,9 @@ export const loadHeader = async (options = {}) => {
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 // 로그아웃 시 로컬 스토리지에서 토큰 제거
-                confirm('정말 로그아웃 하시겠습니까?')
-                logoutUser();
+                if (confirm('정말 로그아웃 하시겠습니까?')) {
+                    logoutUser();
+                }
             });
         }
 

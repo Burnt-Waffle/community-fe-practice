@@ -46,6 +46,7 @@ export const authFetch = async (endpoint, options = {}) => {
         } catch (refreshError) {
             // refreshToken 함수 내부 또는 재시도 요청에서 에러 발생 시
             console.error("Refresh or retry failed:", refreshError);
+            logoutUser();
             throw new Error('인증 갱신 또는 재시도에 실패했습니다. 다시 로그인해주세요.');
         }
     } else if (!response.ok) {

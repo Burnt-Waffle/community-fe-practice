@@ -24,7 +24,7 @@ const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    loadHeader({ showBackButton: true });
+    loadHeader({ showProfileButton: true, showBackButton: true });
     const urlParams = new URLSearchParams(window.location.search);
     currentPostId = urlParams.get('id');
     if (currentPostId) {
