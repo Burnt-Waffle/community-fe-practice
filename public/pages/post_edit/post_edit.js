@@ -1,6 +1,7 @@
 import { loadHeader } from "../../components/header/header.js";
 import { fetchPost, updatePost } from "../../../api/postRequest.js";
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { showInfoModal, showToast } from "../../components/layout/ui.js";
 
 const form = document.getElementById('post-edit-form');
 const titleInput = document.getElementById('post-title');
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded' , async () => {
     if (currentPostId) {
         await loadPostData(currentPostId);
     } else {
-        alert('잘못된 접근입니다.');
+        await showInfoModal('잘못된 접근입니다.');
         window.location.href = '/public/pages/post_list/post_list.html';
     }
 
@@ -40,7 +41,7 @@ const loadPostData = async(postId) => {
         updateCharCounter();
     } catch (error) {
         console.error('게시글 정보 로드 실패:', error);
-        alert('게시글 정보를 불러오는 데 실패했습니다.');
+        showToast('게시글 정보를 불러오는 데 실패했습니다.');
     }
 }
 
@@ -69,14 +70,14 @@ form.addEventListener('submit', async (event) => {
     try {
         const responseData = await updatePost(currentPostId, titleInput.value, contentInput.value);
         if (responseData && responseData.id) {
-            alert('게시글 수정 완료!')
+            await showInfoModal('게시글 수정 완료!')
             window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
         } else {
-            alert(responseData.message || '게시글 수정에 실패했습니다.');
+            showToast(responseData.message || '게시글 수정에 실패했습니다.');
         }
     } catch (error) {
         console.error('게시글 수정 중 에러 발생:', error);
-        alert(`게시글 수정 중 오류가 발생했습니다. ${error.message}`);
+        showToast(`게시글 수정 중 오류가 발생했습니다. ${error.message}`);
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = '작성 완료';

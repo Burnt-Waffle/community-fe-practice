@@ -2,6 +2,7 @@ import { loadHeader } from "../../components/header/header.js";
 import { authFetch, logoutUser } from "../../../api/authClient.js";
 import { validatePassword, validatePasswordConfirm } from "../../../utils/validation.js";
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { showInfoModal } from "../../components/layout/ui.js";
 
 const currentPasswordInput = document.getElementById('pw');
 const newPasswordInput = document.getElementById('new-pw');
@@ -79,7 +80,7 @@ submitButton.addEventListener('click', async () => {
             body: JSON.stringify(changeData)
         });
         if (response.ok) {
-            alert('비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 다시 로그인 해주세요.');
+            await showInfoModal('비밀번호가 성공적으로 변경되었습니다.\n' + '다시 로그인 해주세요.');
             logoutUser();
         } else {
             const errorData = await response.json();

@@ -6,6 +6,7 @@ import {
     validatePasswordConfirm
 } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
+import { showInfoModal, showToast } from "../../components/layout/ui.js";
 
 const imagePreview = document.getElementById('profile-image-button');
 const fileInput = document.getElementById('profile-image-upload');
@@ -103,14 +104,14 @@ signupButton.addEventListener('click', async () => {
             body: JSON.stringify(signupData)
         });
         if (response.ok) {
-            alert('회원가입 성공!');
+            await showInfoModal('회원가입 성공!');
             window.location.href = '/public/pages/login/login.html';
         } else {
             const errorData = await response.json();
-            alert(errorData.message || '회원가입에 실패했습니다.');
+            showToast(errorData.message || '회원가입에 실패했습니다.');
         }
     } catch (error) {
         console.error('Signup Error:', error);
-        alert('회원가입 중 문제가 발생했습니다.');
+        showToast('회원가입 중 문제가 발생했습니다.');
     }
 });

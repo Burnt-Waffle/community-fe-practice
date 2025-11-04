@@ -4,6 +4,7 @@ import { fetchCurrentUser, deleteCurrentUser } from "../../../api/userRequest.js
 import { validateNickname } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { showInfoModal, showToast } from "../../components/layout/ui.js";
 
 const imagePreview = document.getElementById('profile-image-button');
 const fileInput = document.getElementById('profile-image-upload');
@@ -36,7 +37,7 @@ const loadUserData = async () => {
         }
     } catch (error) {
         console.error('회원 정보 로드 실패:', error);
-        alert('회원 정보를 불러오는 데 실패했습니다.')
+        showToast('회원 정보를 불러오는 데 실패했습니다.')
     }
 }
 
@@ -98,7 +99,7 @@ submitButton.addEventListener('click', async () => {
             body: JSON.stringify(changeData)
         });
         if (response.ok) {
-            alert('회원정보수정 성공!');
+            await showInfoModal('회원정보수정 성공!');
             location.replace(location.href)
         } else {
             const errorData = await response.json();
@@ -116,11 +117,11 @@ deleteButton.addEventListener('click', async () => {
     if (confirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
         try {
             const response = await deleteCurrentUser();
-            alert('회원 탈퇴가 완료되었습니다.');
+            await showInfoModal('회원 탈퇴가 완료되었습니다.');
             logoutUser();
         } catch (error) {
             console.error('Delete Account Error:', error);
-            alert(`회원 탈퇴 처리 중 문제가 발생했습니다. ${error.message}`);
+            showToast(`회원 탈퇴 처리 중 문제가 발생했습니다. ${error.message}`);
         }
     }
 })

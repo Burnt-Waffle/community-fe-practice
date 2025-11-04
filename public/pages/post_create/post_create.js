@@ -1,6 +1,7 @@
 import { loadHeader } from "../../components/header/header.js";
 import { createPost } from "../../../api/postRequest.js";
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { showInfoModal, showToast } from "../../components/layout/ui.js";
 
 const form = document.getElementById('post-create-form');
 const titleInput = document.getElementById('post-title');
@@ -42,14 +43,14 @@ form.addEventListener('submit', async (event) => {
     try {
         const responseData = await createPost(titleInput.value, contentInput.value);
         if (responseData && responseData.id) {
-            alert('게시글 업로드 완료!')
+            await showInfoModal('게시글이 성공적으로 등록되었습니다.');
             window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
         } else {
-            alert(responseData.message || '게시글 등록에 실패했습니다.');
+            showToast(responseData.message || '게시글 등록에 실패했습니다.');
         }
     } catch (error) {
         console.error('게시글 등록 중 에러 발생:', error);
-        alert(`게시글 등록 중 오류가 발생했습니다. ${error.message}`);
+        showToast(`게시글 등록 중 오류가 발생했습니다. ${error.message}`);
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = '작성 완료';

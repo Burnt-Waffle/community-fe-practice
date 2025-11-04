@@ -5,6 +5,7 @@ import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
 import { postComment } from '../../../api/commentRequest.js';
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { showInfoModal, showToast } from '../../components/layout/ui.js';
 
 let nextPage = 0;
 const pageSize = 10;
@@ -158,7 +159,7 @@ const handleSubmitComment = async (postId) => {
     const content = commentInputBox.value;
 
     if (content.trim().length === 0) {
-        alert('댓글 내용을 입력해주세요.')
+        showToast('댓글 내용을 입력해주세요.')
         return;
     }
 
@@ -177,7 +178,7 @@ const handleSubmitComment = async (postId) => {
         window.location.reload();
     } catch (error) {
         console.error('댓글 등록 실패:', error);
-        alert(`댓글 등록에 실패했습니다. ${error.message}`);
+        showToast(`댓글 등록에 실패했습니다. ${error.message}`);
         commentPostButton.textContent = originalButtonText;
     } finally {
         commentPostButton.disabled = false;
@@ -197,7 +198,7 @@ const handleLikeClick = async (postId) => {
         likeButton.classList.toggle('liked', result.isLikedByCurrentUser);
     } catch (error) {
         console.error('좋아요 처리 실패:', error);
-        alert(`좋아요 처리에 실패했습니다: ${error.message}`);
+        showToast(`좋아요 처리에 실패했습니다: ${error.message}`);
     }
 };
 
@@ -205,11 +206,11 @@ const handleDeletePost = async (postId) => {
     if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
         try {
             await deletePost(postId);
-            alert('게시글이 삭제되었습니다.');
+            await showInfoModal('게시글이 삭제되었습니다.');
             window.location.href = '/public/pages/post_list/post_list.html';
         } catch (error) {
             console.error('게시글 삭제 실패:', error);
-            alert(`게시글 삭제에 실패했습니다: ${error.message}`);
+            showToast(`게시글 삭제에 실패했습니다: ${error.message}`);
         }
     }
 };
@@ -218,11 +219,11 @@ const handleDeleteComment = async (postId, commentId) => {
     if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
         try {
             await deleteComment(postId, commentId);
-            alert('댓글이 삭제되었습니다.');
+            await showInfoModal('댓글이 삭제되었습니다.');
             window.location.reload();
         } catch (error) {
             console.error('댓글 삭제 실패:', error);
-            alert(`댓글 삭제에 실패했습니다: ${error.message}`);
+            showToast(`댓글 삭제에 실패했습니다: ${error.message}`);
         }
     }
 };
