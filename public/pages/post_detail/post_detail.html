@@ -23,10 +23,30 @@
                     <div class="char-counter" id="char-counter">0 / 2000</div>
                     <button class="comment-submit-button" id="comment-button">댓글 등록</button>
                 </div>
-            </div> 
+            </div>
             <div class="comment-list" id="comment-list"></div>
             <div class="load-more-container">
                 <button class="load-more-button" id="load-more-button" style="display: none;">댓글 더보기</button>
+            </div>
+            <div id="confirmModal" class="modal-overlay">
+                <div class="modal-content">
+                    <p id="confirmMessage"></p>
+
+                    <div class="modal-button-container">
+                        <button id="confirmCancelButton" class="modal-button modal-button-cancel">
+                            취소
+                        </button>
+                        <button id="confirmOkButton" class="modal-button modal-button-confirm">
+                            확인
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="infoModal" class="modal-overlay">
+                <div class="modal-content">
+                    <p id="modalMessage"></p>
+                    <button id="modalOkButton" class="modal-button modal-button-confirm">확인</button>
+                </div>
             </div>
             <div id="toastContainer"></div>
         </main>

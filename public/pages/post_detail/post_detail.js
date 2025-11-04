@@ -5,7 +5,7 @@ import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
 import { postComment } from '../../../api/commentRequest.js';
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
-import { showInfoModal, showToast } from '../../components/layout/ui.js';
+import { showConfirmModal, showInfoModal, showToast } from '../../components/layout/ui.js';
 
 let nextPage = 0;
 const pageSize = 10;
@@ -203,7 +203,8 @@ const handleLikeClick = async (postId) => {
 };
 
 const handleDeletePost = async (postId) => {
-    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+    const userConfirm = await showConfirmModal('정말로 이 게시글을 삭제하시겠습니까?');
+    if (userConfirm) {
         try {
             await deletePost(postId);
             await showInfoModal('게시글이 삭제되었습니다.');
@@ -216,7 +217,8 @@ const handleDeletePost = async (postId) => {
 };
 
 const handleDeleteComment = async (postId, commentId) => {
-    if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+    const userConfirm = await showConfirmModal('정말로 이 댓글을 삭제하시겠습니까?');
+    if (userConfirm) {
         try {
             await deleteComment(postId, commentId);
             await showInfoModal('댓글이 삭제되었습니다.');

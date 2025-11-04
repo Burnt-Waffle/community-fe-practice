@@ -4,7 +4,7 @@ import { fetchCurrentUser, deleteCurrentUser } from "../../../api/userRequest.js
 import { validateNickname } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
 import { performSilentRefresh } from "../../../api/silentRefresh.js";
-import { showInfoModal, showToast } from "../../components/layout/ui.js";
+import { showInfoModal, showConfirmModal, showToast } from "../../components/layout/ui.js";
 
 const imagePreview = document.getElementById('profile-image-button');
 const fileInput = document.getElementById('profile-image-upload');
@@ -114,7 +114,8 @@ submitButton.addEventListener('click', async () => {
 });
 
 deleteButton.addEventListener('click', async () => {
-    if (confirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
+    const userConfirm = await showConfirmModal('정말로 이 댓글을 삭제하시겠습니까?');
+    if (userConfirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
         try {
             const response = await deleteCurrentUser();
             await showInfoModal('회원 탈퇴가 완료되었습니다.');

@@ -20,6 +20,33 @@ export function showInfoModal(message) {
     });
 }
 
+export function showConfirmModal(message) {
+    const modal = document.getElementById('confirmModal');
+    const messageEl = document.getElementById('confirmMessage');
+    const okButton = document.getElementById('confirmOkButton');
+    const cancelButton = document.getElementById('confirmCancelButton');
+
+    if (!modal || !messageEl || !okButton || !cancelButton) {
+        console.error("확인 모달 HTML 요소가 페이지에 없습니다.");
+        return Promise.resolve(confirm(message)); 
+    }
+
+    messageEl.textContent = message;
+    modal.style.display = 'flex';
+
+    return new Promise((resolve) => {      
+        okButton.onclick = () => {
+            modal.style.display = 'none';
+            resolve(true);
+        };
+        
+        cancelButton.onclick = () => {
+            modal.style.display = 'none';
+            resolve(false);
+        };
+    });
+}
+
 export function showToast(message, duration = 3000) {
     const container = document.getElementById('toastContainer');
 
