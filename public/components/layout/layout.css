@@ -16,3 +16,115 @@ body {
     padding-top: 100px;
     background-color: #ffffff;
 }
+
+.modal-overlay {
+    display: none; 
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000; 
+    
+    display: none;
+}
+
+/* 모달 내용 (흰색 박스) */
+.modal-content {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 90%;
+    max-width: 400px; /* 최대 너비 제한 */
+    
+    border: 1px solid #394648; 
+}
+
+/* 모달 메시지 텍스트 */
+.modal-content p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #394648;
+    margin: 0 0 20px 0;
+    font-weight: 500;
+    white-space: pre-line;
+}
+
+/* 모달 확인 버튼 */
+.modal-content button {
+    background-color: #69995D; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-content button:hover {
+    background-color: #57834E;
+}
+
+/* 토스트 알림을 담을 컨테이너 */
+#toastContainer {
+    /* 화면 우측 상단에 고정 */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    
+    /* 다른 요소들 위에 보이도록 z-index 설정 */
+    z-index: 1001; 
+    
+    /* 토스트가 여러 개 쌓일 때 간격 */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 개별 토스트 알림 스타일 */
+.toast-item {
+    background-color: #ffffff;
+    color: #394648;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #394648;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    
+    /* 애니메이션 적용 */
+    animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s; 
+    /* 2.7초 뒤에 fadeOut 시작 (총 3초) */
+}
+
+/* 토스트가 나타날 때 애니메이션 (오른쪽에서 슬라이드) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 토스트가 사라질 때 애니메이션 (투명해지기) */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
