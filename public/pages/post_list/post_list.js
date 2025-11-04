@@ -1,6 +1,7 @@
 import { loadHeader } from '../../components/header/header.js';
 import { fetchPosts } from '../../../api/postRequest.js';
 import { createPostListElement } from '../../components/post/createPostListElement.js';
+import { performSilentRefresh } from '../../../utils/silentRefresh.js';
 
 const createPostButton = document.getElementById('create-post-button');
 
@@ -11,10 +12,11 @@ let isLoading = false;
 
 // DOM이 완전히 로드된 후에 실행
 document.addEventListener('DOMContentLoaded', async () => {
+    await performSilentRefresh();
     loadHeader({ showProfileButton: true, showBackButton: false });
     createPostButton.addEventListener('click', handleCreatePost)
-    loadInitialPosts();
-    window.addEventListener('scroll', handleScroll);
+    await loadInitialPosts();
+    intersectionObserver();
 });
 
 // 처음 게시글 목록 로딩
@@ -53,14 +55,6 @@ const loadMorePosts = async () => {
     }
 }
 
-// 스크롤 감지
-const handleScroll = () => {
-    if (!isLoading &&
-        (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
-            loadMorePosts();
-    }
-}
-
 // 목록 초기 로딩
 const setPostList = (posts) => {
     const postListContainer = document.getElementById('post-list');
@@ -79,6 +73,28 @@ const appendPosts = (posts) => {
         });
         postListContainer.appendChild(postElement);
     });
+}
+
+const intersectionObserver = () => {
+    const sentinel = document.getElementById('scroll-sentinel');
+    if (!sentinel) return;
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0
+    }
+
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isLoading && !isLastPage) {
+                loadMorePosts();
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    observer.observe(sentinel);
 }
 
 // 게시글 작성 페이지로 이동
