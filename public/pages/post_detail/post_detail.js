@@ -24,12 +24,12 @@ const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    loadHeader({ showProfileButton: true, showBackButton: true });
+    await loadHeader({ showProfileButton: true, showBackButton: true });
     const urlParams = new URLSearchParams(window.location.search);
     currentPostId = urlParams.get('id');
     if (currentPostId) {
-        loadPost(currentPostId);
-        loadComments(currentPostId);
+        await loadPost(currentPostId);
+        await loadComments(currentPostId);
     } else {
         console.error('Post ID not found in URL.')
         document.body.innerHTML = '<h1>게시물을 찾을 수 없습니다.</h1>'

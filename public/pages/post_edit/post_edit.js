@@ -15,7 +15,7 @@ let currentPostId = null;
 
 document.addEventListener('DOMContentLoaded' , async () => {
     await performSilentRefresh();
-    loadHeader({ showProfileButton: true, showBackButton: true });
+    await loadHeader({ showProfileButton: true, showBackButton: true });
 
     const urlParams = new URLSearchParams(window.location.search);
     currentPostId = urlParams.get('id');

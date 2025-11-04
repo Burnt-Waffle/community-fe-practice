@@ -9,7 +9,7 @@ const helperText = document.getElementById('helper');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    loadHeader({ showProfileButton: false, showBackButton: false });
+    await loadHeader({ showProfileButton: false, showBackButton: false });
 });
 
 // 로그인 버튼의 이벤트 리스너

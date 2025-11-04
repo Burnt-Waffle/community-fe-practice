@@ -14,8 +14,8 @@ const deleteButton = document.getElementById('delete-account-button');
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    loadHeader({ showProfileButton: true, showBackButton: true });
-    loadUserData();
+    await loadHeader({ showProfileButton: true, showBackButton: true });
+    await loadUserData();
     updateSubmitButtonState();
 });
 

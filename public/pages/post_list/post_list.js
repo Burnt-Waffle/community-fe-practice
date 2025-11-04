@@ -13,9 +13,9 @@ let isLoading = false;
 // DOM이 완전히 로드된 후에 실행
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    loadHeader({ showProfileButton: true, showBackButton: false });
-    createPostButton.addEventListener('click', handleCreatePost)
+    await loadHeader({ showProfileButton: true, showBackButton: false });
     await loadInitialPosts();
+    createPostButton.addEventListener('click', handleCreatePost)
     intersectionObserver();
 });
 
