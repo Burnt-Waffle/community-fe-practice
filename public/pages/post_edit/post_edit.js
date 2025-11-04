@@ -1,6 +1,6 @@
 import { loadHeader } from "../../components/header/header.js";
 import { fetchPost, updatePost } from "../../../api/postRequest.js";
-import { performSilentRefresh } from "../../../utils/silentRefresh.js";
+import { performSilentRefresh } from "../../../api/silentRefresh.js";
 
 const form = document.getElementById('post-edit-form');
 const titleInput = document.getElementById('post-title');

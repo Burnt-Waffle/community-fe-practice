@@ -1,4 +1,4 @@
-import { refreshToken } from "../api/authClient.js";
+import { refreshToken } from "./authClient.js";
 
 export const performSilentRefresh = async () => {
     try {

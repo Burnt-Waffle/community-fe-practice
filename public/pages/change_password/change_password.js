@@ -1,7 +1,7 @@
 import { loadHeader } from "../../components/header/header.js";
 import { authFetch, logoutUser } from "../../../api/authClient.js";
 import { validatePassword, validatePasswordConfirm } from "../../../utils/validation.js";
-import { performSilentRefresh } from "../../../utils/silentRefresh.js";
+import { performSilentRefresh } from "../../../api/silentRefresh.js";
 
 const currentPasswordInput = document.getElementById('pw');
 const newPasswordInput = document.getElementById('new-pw');

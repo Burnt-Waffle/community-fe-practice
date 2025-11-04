@@ -1,6 +1,6 @@
 import { loadHeader } from "../../components/header/header.js";
 import { createPost } from "../../../api/postRequest.js";
-import { performSilentRefresh } from "../../../utils/silentRefresh.js";
+import { performSilentRefresh } from "../../../api/silentRefresh.js";
 
 const form = document.getElementById('post-create-form');
 const titleInput = document.getElementById('post-title');

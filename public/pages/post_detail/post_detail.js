@@ -4,7 +4,7 @@ import { fetchcomments, deleteComment, updateComment } from '../../../api/commen
 import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
 import { postComment } from '../../../api/commentRequest.js';
-import { performSilentRefresh } from "../../../utils/silentRefresh.js";
+import { performSilentRefresh } from "../../../api/silentRefresh.js";
 
 let nextPage = 0;
 const pageSize = 10;
