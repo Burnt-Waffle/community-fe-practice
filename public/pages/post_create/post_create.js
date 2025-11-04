@@ -1,5 +1,6 @@
 import { loadHeader } from "../../components/header/header.js";
 import { createPost } from "../../../api/postRequest.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 
 const form = document.getElementById('post-create-form');
 const titleInput = document.getElementById('post-title');
@@ -11,6 +12,7 @@ const charCounter = document.getElementById('content-char-counter');
 const MAX_POST_LENGTH = 10000;
 
 document.addEventListener('DOMContentLoaded' , async () => {
+    await performSilentRefresh();
     loadHeader({ showBackButton: true });
     updateSubmitButtonState();
 })

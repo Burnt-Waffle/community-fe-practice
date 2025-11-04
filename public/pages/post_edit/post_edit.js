@@ -1,5 +1,6 @@
 import { loadHeader } from "../../components/header/header.js";
 import { fetchPost, updatePost } from "../../../api/postRequest.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 
 const form = document.getElementById('post-edit-form');
 const titleInput = document.getElementById('post-title');
@@ -13,6 +14,7 @@ const MAX_POST_LENGTH = 10000;
 let currentPostId = null;
 
 document.addEventListener('DOMContentLoaded' , async () => {
+    await performSilentRefresh();
     loadHeader({ showBackButton: true });
 
     const urlParams = new URLSearchParams(window.location.search);

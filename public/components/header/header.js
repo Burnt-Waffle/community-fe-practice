@@ -26,11 +26,11 @@ export const loadHeader = async (options = {}) => {
             backButton.classList.add('hidden');
         }
         
-        // 프로필 아이콘 숨김
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken && profileButton) {
-            profileButton.classList.add('hidden');
-        }
+        // // 프로필 아이콘 숨김
+        // const accessToken = localStorage.getItem('accessToken');
+        // if (!accessToken && profileButton) {
+        //     profileButton.classList.add('hidden');
+        // }
 
         // 뒤로가기 버튼 설정
         if (backButton) {

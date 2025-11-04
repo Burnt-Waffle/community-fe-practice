@@ -3,6 +3,7 @@ import { API_BASE_URL } from "../../../utils/config.js";
 import { fetchCurrentUser, deleteCurrentUser } from "../../../api/userRequest.js";
 import { validateNickname } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 
 const imagePreview = document.getElementById('profile-image-button');
 const fileInput = document.getElementById('profile-image-upload');
@@ -12,6 +13,7 @@ const submitButton = document.getElementById('submit-button');
 const deleteButton = document.getElementById('delete-account-button');
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await performSilentRefresh();
     loadHeader({ showBackButton: true });
     loadUserData();
     updateSubmitButtonState();

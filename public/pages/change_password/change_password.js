@@ -1,7 +1,7 @@
-import { API_BASE_URL } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
 import { authFetch, logoutUser } from "../../../api/authClient.js";
 import { validatePassword, validatePasswordConfirm } from "../../../utils/validation.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 
 const currentPasswordInput = document.getElementById('pw');
 const newPasswordInput = document.getElementById('new-pw');
@@ -13,6 +13,7 @@ const newPasswordHelper = document.getElementById('new-password-helper');
 const passwordConfirmHelper = document.getElementById('password-confirm-helper');
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await performSilentRefresh();
     loadHeader({ showBackButton: true });
     updateSubmitButtonState();
 });

@@ -4,6 +4,7 @@ import { fetchcomments, deleteComment, updateComment } from '../../../api/commen
 import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
 import { postComment } from '../../../api/commentRequest.js';
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 
 let nextPage = 0;
 const pageSize = 10;
@@ -22,6 +23,7 @@ const MAX_COMMENT_LENGTH = 2000;
 const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await performSilentRefresh();
     loadHeader({ showBackButton: true });
     const urlParams = new URLSearchParams(window.location.search);
     currentPostId = urlParams.get('id');

@@ -1,12 +1,11 @@
 import { API_BASE_URL } from "../utils/config.js";
 
+let accessToken = null;
 let isRefreshing = false;
 let refreshPromise = null;
 
 // 인증 토큰을 포함하여 API 요청을 보내는 범용 fetch 함수
 export const authFetch = async (endpoint, options = {}) => {
-    let accessToken = localStorage.getItem('accessToken');
-
     const makeRequest = async (token) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -24,11 +23,11 @@ export const authFetch = async (endpoint, options = {}) => {
 
     let response = await makeRequest(accessToken);
 
-    // 응답이 실패했고 그 이유가 401 Unauthorized 이라면
+    // 응답이 실패했고 그 이유가 401 Unauthorized 이라면 access token 갱신 시도
     if (!response.ok && response.status === 401) {
         if (!isRefreshing) {
             isRefreshing = true;
-            // Promise를 사용하여 갱신 결과를 저장
+            // 갱신 결과를 저장
             refreshPromise = refreshToken().finally(() => {
                 isRefreshing = false;
                 refreshPromise = null;
@@ -40,12 +39,10 @@ export const authFetch = async (endpoint, options = {}) => {
             const newAccessToken = await refreshPromise;
             // 갱신된 토큰으로 원래 요청 재시도
             response = await makeRequest(newAccessToken);
-
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ message: '재시도 요청 실패' }));
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
         } catch (refreshError) {
             // refreshToken 함수 내부 또는 재시도 요청에서 에러 발생 시
             console.error("Refresh or retry failed:", refreshError);
@@ -56,29 +53,28 @@ export const authFetch = async (endpoint, options = {}) => {
         const errorData = await response.json().catch(() => ({ message: '서버 에러 발생' }));
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
-
     return response;
 };
 
-export const logoutUser = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    window.location.href = '/public/pages/login/login.html';
+export const logoutUser = async () => {
+    try {
+        await fetch(`${API_BASE_URL}/api/v1/auth/logout`, {
+            method: 'POST',
+            credentials: 'include',
+        });
+    } catch (error) {
+        console.error("Logout API call failed:", error);
+    } finally {
+        accessToken = null;
+        window.location.href = '/public/pages/login/login.html';
+    }
 };
 
-const refreshToken = async () => {
-    const currentRefreshToken = localStorage.getItem('refreshToken');
-    if (!currentRefreshToken) {
-        throw new Error('No refresh token available.');
-    }
-
+export const refreshToken = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/auth/reissue`, {
+        const response = await fetch(`${API_BASE_URL}/api/v1/auth/refresh`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ refreshToken: currentRefreshToken })
+            credentials: 'include',
         });
 
         if (!response.ok) {
@@ -86,16 +82,21 @@ const refreshToken = async () => {
         }
 
         const data = await response.json();
-        localStorage.setItem('accessToken', data.accessToken);
-        if (data.refreshToken) {
-            localStorage.setItem('refreshToken', data.refreshToken);
-        }
+
+        // 새로운 AT를 인메모리에 저장
+        setAccessToken(data.accessToken);
         return data.accessToken;
 
     } catch (error) {
         console.error('Token refresh error:', error);
         // 갱신 실패 시 로그아웃 처리
-        logoutUser();
+        // logoutUser();
         throw error;
     }
 }
+
+export const setAccessToken = (token) => {
+    accessToken = token;
+};
+
+export const getAccessToken = () => accessToken;

@@ -7,6 +7,7 @@ export const createCommentElement = ({ id, content, postId, authorNickname,
     container.className = 'comment-container';
     container.dataset.commentId = id;
 
+    // 날짜 형태 맞춤
     const formattedDate = formatDate(createdAt);
 
     let profileImageUrl = '';

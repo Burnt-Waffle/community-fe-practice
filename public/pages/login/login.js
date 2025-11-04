@@ -1,5 +1,6 @@
 import { API_BASE_URL } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
+import { setAccessToken } from "../../../api/authClient.js";
 
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('id');
@@ -54,9 +55,7 @@ loginForm.addEventListener('submit', async (event) => {
             // 로그인 성공 (HTTP 상태 코드가 200-299인 경우)
             const data = await response.json();
 
-            // JWT 토큰 로컬 스토리지에 저장
-            localStorage.setItem('accessToken', data.accessToken);
-            localStorage.setItem('refreshToken', data.refreshToken);
+            setAccessToken(data.accessToken);
 
             // 로그인 성공 후 이동할 페이지 주소
             window.location.href = '/public/pages/post_list/post_list.html';
