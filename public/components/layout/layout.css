@@ -17,6 +17,42 @@ body {
     background-color: #ffffff;
 }
 
+.modal-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* [추가] 모달 버튼 공통 스타일 */
+.modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-button-confirm {
+    background-color: #69995D;
+    color: white;
+}
+.modal-button-confirm:hover {
+    background-color: #57834E;
+    box-shadow: 0 0 0 2px rgba(237, 182, 163, 0.25);
+}
+
+.modal-button-cancel {
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+.modal-button-cancel:hover {
+    background-color: #cccccc;
+}
+
 .modal-overlay {
     display: none; 
     
@@ -44,7 +80,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     text-align: center;
     width: 90%;
-    max-width: 400px; /* 최대 너비 제한 */
+    max-width: 400px;
     
     border: 1px solid #394648; 
 }
@@ -59,34 +95,14 @@ body {
     white-space: pre-line;
 }
 
-/* 모달 확인 버튼 */
-.modal-content button {
-    background-color: #69995D; 
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.modal-content button:hover {
-    background-color: #57834E;
-}
-
 /* 토스트 알림을 담을 컨테이너 */
 #toastContainer {
-    /* 화면 우측 상단에 고정 */
     position: fixed;
     top: 20px;
     right: 20px;
     
-    /* 다른 요소들 위에 보이도록 z-index 설정 */
     z-index: 1001; 
-    
-    /* 토스트가 여러 개 쌓일 때 간격 */
+
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -94,17 +110,15 @@ body {
 
 /* 개별 토스트 알림 스타일 */
 .toast-item {
-    background-color: #ffffff;
+    background-color: #EDB6A3;
     color: #394648;
     padding: 12px 20px;
     border-radius: 8px;
-    border: 1px solid #394648;
+    border: 1px solid #e3a38f;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     font-weight: 500;
-    
-    /* 애니메이션 적용 */
+
     animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s; 
-    /* 2.7초 뒤에 fadeOut 시작 (총 3초) */
 }
 
 /* 토스트가 나타날 때 애니메이션 (오른쪽에서 슬라이드) */
