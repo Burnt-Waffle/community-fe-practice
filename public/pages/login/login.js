@@ -6,10 +6,12 @@ const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('id');
 const passwordInput = document.getElementById('pw');
 const helperText = document.getElementById('helper');
+const signupLink = document.getElementById('signup-link');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
     await loadHeader({ showProfileButton: false, showBackButton: false });
+    signupLink.href = `${API_BASE_URL}/terms`;
 });
 
 // 로그인 버튼의 이벤트 리스너
