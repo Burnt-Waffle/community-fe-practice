@@ -1,5 +1,5 @@
 import { logoutUser } from "../../../api/authClient.js";
-import { showConfirmModal, showInfoModal, showToast } from "../../components/layout/ui.js";
+import { showConfirmModal, showInfoModal } from "../../components/layout/ui.js";
 
 export const loadHeader = async (options = {}) => {
     const config = {
@@ -55,9 +55,8 @@ export const loadHeader = async (options = {}) => {
         if (logoutButton) {
             logoutButton.addEventListener('click', async (e) => {
                 e.preventDefault();
-                // 로그아웃 시 로컬 스토리지에서 토큰 제거
                 const userConfirm = await showConfirmModal('정말 로그아웃 하시겠습니까?');
-                if (userConfirm()) {
+                if (userConfirm) {
                     await showInfoModal('로그아웃이 완료되었습니다.');
                     logoutUser();
                 }
