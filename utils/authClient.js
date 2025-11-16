@@ -15,6 +15,11 @@ export const authFetch = async (endpoint, options = {}) => {
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
+
+        if (options.body instanceof FormData) {
+            delete headers['Content-Type'];
+        }
+        
         return fetch(`${API_BASE_URL}${endpoint}`, {
             ...options,
             headers,

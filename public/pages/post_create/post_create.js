@@ -40,8 +40,13 @@ form.addEventListener('submit', async (event) => {
     submitButton.disabled = true;
     submitButton.textContent = '업로드 중...';
 
+    const title = titleInput.value;
+    const content = contentInput.value;
+
+    const files = imageInput.files;
+
     try {
-        const responseData = await createPost(titleInput.value, contentInput.value);
+        const responseData = await createPost(title, content, files);
         if (responseData && responseData.id) {
             await showInfoModal('게시글이 성공적으로 등록되었습니다.');
             window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
