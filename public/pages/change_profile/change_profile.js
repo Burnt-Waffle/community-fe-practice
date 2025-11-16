@@ -1,9 +1,9 @@
-import { authFetch, logoutUser } from "../../../api/authClient.js";
+import { authFetch, logoutUser } from "../../../utils/authClient.js";
 import { API_BASE_URL } from "../../../utils/config.js";
-import { fetchCurrentUser, deleteCurrentUser } from "../../../api/userRequest.js";
+import { fetchCurrentUser, deleteCurrentUser } from "../../../utils/userRequest.js";
 import { validateNickname } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
-import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 import { showInfoModal, showConfirmModal, showToast } from "../../components/layout/ui.js";
 
 const imagePreview = document.getElementById('profile-image-button');

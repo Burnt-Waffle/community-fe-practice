@@ -1,10 +1,9 @@
 import { loadHeader } from '../../components/header/header.js';
-import { fetchPost, toggleLike, deletePost } from '../../../api/postRequest.js';
-import { fetchcomments, deleteComment, updateComment } from '../../../api/commentRequest.js';
+import { fetchPost, toggleLike, deletePost } from '../../../utils/postRequest.js';
+import { fetchcomments, postComment, deleteComment, updateComment } from '../../../utils/commentRequest.js';
 import { createPostElement } from '../../components/post/createPostElement.js';
 import { createCommentElement } from '../../components/comment/createCommentElement.js';
-import { postComment } from '../../../api/commentRequest.js';
-import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { performSilentRefresh } from '../../../utils/silentRefresh.js';
 import { showConfirmModal, showInfoModal, showToast } from '../../components/layout/ui.js';
 
 let nextPage = 0;

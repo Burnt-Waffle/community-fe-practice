@@ -1,6 +1,6 @@
 import { loadHeader } from "../../components/header/header.js";
-import { createPost } from "../../../api/postRequest.js";
-import { performSilentRefresh } from "../../../api/silentRefresh.js";
+import { createPost } from "../../../utils/postRequest.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 import { showInfoModal, showToast } from "../../components/layout/ui.js";
 
 const form = document.getElementById('post-create-form');

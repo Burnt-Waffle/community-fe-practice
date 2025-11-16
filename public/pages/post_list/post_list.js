@@ -1,7 +1,7 @@
 import { loadHeader } from '../../components/header/header.js';
-import { fetchPosts } from '../../../api/postRequest.js';
+import { fetchPosts } from '../../../utils/postRequest.js';
 import { createPostListElement } from '../../components/post/createPostListElement.js';
-import { performSilentRefresh } from '../../../api/silentRefresh.js';
+import { performSilentRefresh } from '../../../utils/silentRefresh.js';
 
 const createPostButton = document.getElementById('create-post-button');
 
