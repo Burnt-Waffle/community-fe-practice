@@ -1,4 +1,4 @@
-import { logoutUser } from "../../../api/authClient.js";
+import { logoutUser } from "../../../utils/authClient.js";
 import { showConfirmModal, showInfoModal } from "../../components/layout/ui.js";
 
 export const loadHeader = async (options = {}) => {

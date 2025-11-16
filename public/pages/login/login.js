@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
-import { setAccessToken } from "../../../api/authClient.js";
+import { setAccessToken } from "../../../utils/authClient.js";
 
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('id');
