@@ -59,7 +59,26 @@
     padding: 10px 0;
 }
 
-.post-image {
+.post-image-container {
+    display: flex;
+    flex-direction: column; /* 이미지를 세로로 쌓음 */
+    gap: 10px; /* 이미지 사이 간격 */
+    margin-bottom: 20px; /* 본문 내용과의 간격 */
+}
+
+.post-image-item {
+    width: 100%; /* 컨테이너 너비에 맞춤 */
+    height: auto; /* 이미지 비율 유지 */
+    
+    /* (선택 사항) 모든 이미지를 동일한 "높이"로 강제하고 싶다면 */
+    /* height: 400px; */ 
+    /* object-fit: cover; */ /* 비율을 유지하며 꽉 채움 (이미지가 잘릴 수 있음) */
+    
+    border-radius: 8px; /* 모서리 둥글게 */
+    background-color: #f0f0f0; /* 로딩 중 배경색 */
+}
+
+/* .post-image {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -70,7 +89,7 @@
     max-width: 100%;
     border-radius: 8px;
     height: auto;
-}
+} */
 
 .post-content {
     font-size: 16px;

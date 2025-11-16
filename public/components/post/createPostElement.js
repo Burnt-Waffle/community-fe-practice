@@ -1,4 +1,3 @@
-import { API_BASE_URL } from "../../../utils/config.js";
 import { formatDate } from "../../../utils/function.js";
 
 export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls, authorNickname, authorProfileImageUrl,
@@ -10,13 +9,14 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
     const formattedDate = formatDate(createdAt);
 
     let profileImageUrl = '';
+
     if(authorProfileImageUrl){
-        profileImageUrl = `${API_BASE_URL}${authorProfileImageUrl}`
+        profileImageUrl = `${authorProfileImageUrl}`;
     } else {
-        profileImageUrl = '/assests/profile-default.png'
+        profileImageUrl = '/assets/profile-default.png';
     }
 
-    const imagesHtml = imageUrls.map(url => `<img src="${API_BASE_URL}${url}" alt="게시물 이미지"`).join()
+    const imagesHtml = imageUrls.map(url => `<img src="${url}" alt="게시물 이미지" class="post-image-item"`).join('');
 
     const likedClass = likedByCurrentUser ? 'liked' : '';
 
@@ -32,7 +32,7 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
                     </div>
                 </div>
                 <div class="post-main">
-                    <div class="post-image">${imagesHtml}</div>
+                    <div class="post-image-container">${imagesHtml}</div>
                     <div class="post-content">${content}</div>
                     <div class="post-meta">
                         <button class="like-button ${likedClass}" id="like-button">
@@ -42,6 +42,6 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
                         <div class="views">조회수 ${viewCount}</div>
                     </div>
                 </div>
-    `
+    `;
     return container;
 }
