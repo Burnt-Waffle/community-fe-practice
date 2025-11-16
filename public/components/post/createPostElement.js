@@ -16,7 +16,7 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
         profileImageUrl = '/assets/profile-default.png';
     }
 
-    const imagesHtml = imageUrls.map(url => `<img src="${url}" alt="게시물 이미지" class="post-image-item"`).join('');
+    const imagesHtml = imageUrls.map(url => `<img src="${url}" alt="게시물 이미지" class="post-image-item">`).join('');
 
     const likedClass = likedByCurrentUser ? 'liked' : '';
 
