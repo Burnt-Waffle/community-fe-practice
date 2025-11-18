@@ -1,3 +1,5 @@
+import { authFetch } from "./authClient";
+
 export const uploadImagesToS3 = async (files, uploadUrl) => {
     const formData = new FormData();
 
