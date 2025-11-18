@@ -27,29 +27,21 @@ export const toggleLike = async (postId) => {
     return data;
 }
 
-export const createPost = async (title, content, files) => {
-    const formData = new FormData();
-
+export const createPost = async (title, content, imageUrls) => {
     const postData = {
         title: title,
         content: content,
+        imageUrls: imageUrls
     };
-
-    formData.append('postData', new Blob([JSON.stringify(postData)], {
-        type: "application/json"
-    }))
-
-    if (files && files.length >0) {
-        for (let i = 0; i < files.length; i++) {
-            formData.append('images', files[i]);
-        }
-    }
 
     const response = await authFetch(`${postAPIUrl}`, {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
     });
-    
+
     const data = await response.json();
     return data;
 }

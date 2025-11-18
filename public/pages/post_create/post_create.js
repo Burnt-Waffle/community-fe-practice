@@ -1,3 +1,4 @@
+import { awsUploadUrl } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
 import { createPost } from "../../../utils/postRequest.js";
 import { performSilentRefresh } from "../../../utils/silentRefresh.js";
@@ -46,6 +47,17 @@ form.addEventListener('submit', async (event) => {
     const files = imageInput.files;
 
     try {
+
+        let imageUrls = [];
+
+        if (files && files.length >0) {
+            imageUrls = await uploadImagesToS3(files, awsUploadUrl);
+            if (!imageUrls || imageUrls.length == 0) {
+                throw new Error('이미지 업로드에 실패했습니다.');
+                showToast(responseData.message || '이미지 업로드에 실패했습니다.');
+            }
+        }
+
         const responseData = await createPost(title, content, files);
         if (responseData && responseData.id) {
             await showInfoModal('게시글이 성공적으로 등록되었습니다.');
