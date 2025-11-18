@@ -1,9 +1,14 @@
-export const uploadImagesToS3 = async(FileSystem, uploadUrl) => {
+export const uploadImagesToS3 = async (files, uploadUrl) => {
     const formData = new FormData();
 
-    for (let i = 0; i< files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
         formData.append('profileImage', files[i]);
     }
+
+    const response = await authFetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+    });
 
     const data = await response.json();
 
