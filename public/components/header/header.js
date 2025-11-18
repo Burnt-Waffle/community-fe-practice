@@ -1,4 +1,4 @@
-import { logoutUser } from "../../../utils/authClient.js";
+import { logoutUser, fetchCurrentUser } from "../../../utils/authClient.js";
 import { showConfirmModal, showInfoModal } from "../../components/layout/ui.js";
 
 export const loadHeader = async (options = {}) => {
@@ -23,6 +23,7 @@ export const loadHeader = async (options = {}) => {
 
         const backButton = document.getElementById('back-button');
         const profileButton = document.getElementById('profile-button');
+        const profileImgElement = document.getElementById('header-profile-img');
         const dropdownMenu = document.querySelector('.header-dropdown-menu')
         const logoutButton = document.getElementById('logout-button');
         
@@ -34,6 +35,11 @@ export const loadHeader = async (options = {}) => {
         // 프로필 아이콘 숨김
         if (!config.showProfileButton && profileButton) {
             profileButton.classList.add('hidden');
+        } else if (profileButton && profileImgElement) {
+            const userData = await fetchCurrentUser();
+            if (userData && userData.profileImageUrl) {
+                profileImgElement.src = userData.profileImageUrl;
+            }
         }
 
         // 뒤로가기 버튼 설정

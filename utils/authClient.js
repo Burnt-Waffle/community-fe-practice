@@ -19,7 +19,7 @@ export const authFetch = async (endpoint, options = {}) => {
         if (options.body instanceof FormData) {
             delete headers['Content-Type'];
         }
-        
+
         return fetch(`${API_BASE_URL}${endpoint}`, {
             ...options,
             headers,
@@ -106,3 +106,21 @@ export const setAccessToken = (token) => {
 };
 
 export const getAccessToken = () => accessToken;
+
+export const fetchCurrentUser = async () => {
+    try {
+        const response = await authFetch('/api/v1/users/me', {
+            method: 'GET'
+        });
+        
+        if (!response.ok) {
+            return null;
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('사용자 정보 조회 실패:', error);
+        return null;
+    }
+};
