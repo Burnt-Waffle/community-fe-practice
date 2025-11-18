@@ -15,6 +15,7 @@ const charCounter = document.getElementById('content-char-counter');
 const MAX_POST_LENGTH = 10000;
 
 let currentPostId = null;
+let existingImageUrls = [];
 
 document.addEventListener('DOMContentLoaded' , async () => {
     await performSilentRefresh();
