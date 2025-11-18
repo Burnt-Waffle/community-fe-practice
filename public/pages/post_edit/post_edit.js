@@ -96,7 +96,7 @@ form.addEventListener('submit', async (event) => {
 
         const finalImageUrls = [...existingImageUrls, ...newImageUrls];
 
-        const responseData = await updatePost(currentPostId, titleInput.value, contentInput.value);
+        const responseData = await updatePost(currentPostId, titleInput.value, contentInput.value, finalImageUrls);
         if (responseData && responseData.id) {
             await showInfoModal('게시글 수정 완료!')
             window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
