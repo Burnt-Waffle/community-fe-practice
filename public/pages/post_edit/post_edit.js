@@ -2,6 +2,8 @@ import { loadHeader } from "../../components/header/header.js";
 import { fetchPost, updatePost } from "../../../utils/postRequest.js";
 import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 import { showInfoModal, showToast } from "../../components/layout/ui.js";
+import { uploadImagesToS3 } from "../../../utils/imageFile.js";
+import { awsUploadUrl } from "../../../utils/config.js";
 
 const form = document.getElementById('post-edit-form');
 const titleInput = document.getElementById('post-title');
@@ -38,6 +40,11 @@ const loadPostData = async(postId) => {
         titleInput.value = postData.title;
         contentInput.value = postData.content;
 
+        if (postData.imageUrls && postData.imageUrls.length > 0) {
+            existingImageUrls = postData.imageUrls;
+            renderPreviews(); // 통합 렌더링 함수 호출
+        }
+
         updateCharCounter();
     } catch (error) {
         console.error('게시글 정보 로드 실패:', error);
@@ -46,7 +53,18 @@ const loadPostData = async(postId) => {
 }
 
 imageInput.addEventListener('change', () => {
-    previewContainer.innerHTML = ''; 
+    renderPreviews();
+});
+
+const renderPreviews = () => {
+    previewContainer.innerHTML = '';
+
+    existingImageUrls.forEach((url) => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.className = 'image-preview';
+        previewContainer.appendChild(img);
+    });
 
     const files = Array.from(imageInput.files).slice(0, 5);
     files.forEach(file => {
@@ -59,15 +77,25 @@ imageInput.addEventListener('change', () => {
         };
         reader.readAsDataURL(file);
     });
-});
+}
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     submitButton.disabled = true;
-    submitButton.textContent = '업로드 중...';
+    submitButton.textContent = '수정 중...';
 
     try {
+        const files = imageInput.files;
+        let newImageUrls = [];
+
+        if (files && files.length > 0) {
+            newImageUrls = await uploadImagesToS3(files, awsUploadUrl);
+            if (!newImageUrls) throw new Error('새 이미지 업로드 실패');
+        }
+
+        const finalImageUrls = [...existingImageUrls, ...newImageUrls];
+
         const responseData = await updatePost(currentPostId, titleInput.value, contentInput.value);
         if (responseData && responseData.id) {
             await showInfoModal('게시글 수정 완료!')

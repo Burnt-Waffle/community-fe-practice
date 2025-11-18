@@ -46,13 +46,17 @@ export const createPost = async (title, content, imageUrls) => {
     return data;
 }
 
-export const updatePost = async (postId, title, content) => {
+export const updatePost = async (postId, title, content, imageUrls) => {
     const postUpdateData = {
         title: title,
-        content: content
+        content: content,
+        imageUrls
     };
     const response = await authFetch(`${postAPIUrl}/${postId}`, {
         method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(postUpdateData)
     });
     const data = await response.json();
