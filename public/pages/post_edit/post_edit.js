@@ -16,6 +16,7 @@ const MAX_POST_LENGTH = 10000;
 
 let currentPostId = null;
 let existingImageUrls = [];
+let newFiles = [];
 
 document.addEventListener('DOMContentLoaded' , async () => {
     await performSilentRefresh();
@@ -47,6 +48,7 @@ const loadPostData = async(postId) => {
         }
 
         updateCharCounter();
+        updateSubmitButtonState();
     } catch (error) {
         console.error('게시글 정보 로드 실패:', error);
         showToast('게시글 정보를 불러오는 데 실패했습니다.');
@@ -54,31 +56,56 @@ const loadPostData = async(postId) => {
 }
 
 imageInput.addEventListener('change', () => {
+    const files = Array.from(imageInput.files);
+    newFiles = [...newFiles, ...files];
+    imageInput.value = '';
     renderPreviews();
+    updateSubmitButtonState();
 });
 
 const renderPreviews = () => {
     previewContainer.innerHTML = '';
 
-    existingImageUrls.forEach((url) => {
-        const img = document.createElement('img');
-        img.src = url;
-        img.className = 'image-preview';
-        previewContainer.appendChild(img);
+    existingImageUrls.forEach((url, index) => {
+        createPreviewElement(url, index, 'existing');
     });
 
-    const files = Array.from(imageInput.files).slice(0, 5);
-    files.forEach(file => {
+    newFiles.forEach((file, index) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'image-preview';
-            previewContainer.appendChild(img);
+            createPreviewElement(e.target.result, index, 'new');
         };
         reader.readAsDataURL(file);
     });
 }
+
+const createPreviewElement = (src, index, type) => {
+    const container = document.createElement('div');
+    container.className = 'preview-item';
+
+    const img = document.createElement('img');
+    img.src = src;
+    
+    const btn = document.createElement('button');
+    btn.className = 'delete-btn';
+    btn.innerHTML = '&#10005;'; // X 특수문자
+    btn.type = 'button';
+
+    // 삭제 버튼 클릭
+    btn.onclick = () => {
+        if (type === 'existing') {
+            existingImageUrls.splice(index, 1);
+        } else {
+            newFiles.splice(index, 1);
+        }
+        renderPreviews();
+        updateSubmitButtonState();
+    };
+
+    container.appendChild(img);
+    container.appendChild(btn);
+    previewContainer.appendChild(container);
+};
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -87,11 +114,10 @@ form.addEventListener('submit', async (event) => {
     submitButton.textContent = '수정 중...';
 
     try {
-        const files = imageInput.files;
         let newImageUrls = [];
 
-        if (files && files.length > 0) {
-            newImageUrls = await uploadImagesToS3(files, awsUploadUrl);
+        if (newFiles.length > 0) {
+            newImageUrls = await uploadImagesToS3(newFiles, awsUploadUrl);
             if (!newImageUrls) throw new Error('새 이미지 업로드 실패');
         }
 
