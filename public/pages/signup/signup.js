@@ -1,4 +1,5 @@
-import { API_BASE_URL } from "../../../utils/config.js";
+import { API_BASE_URL, awsUploadUrl } from "../../../utils/config.js";
+import { uploadImagesToS3 } from "../../../utils/imageFile.js";
 import {
     validateEmail,
     validateNickname,
@@ -21,6 +22,8 @@ const passwordHelper = document.getElementById('password-helper');
 const passwordConfirmHelper = document.getElementById('password-confirm-helper');
 const nicknameHelper = document.getElementById('nickname-helper');
 
+let selectedFile = null;
+
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
     await loadHeader({ showProfileButton: false, showBackButton: true });
@@ -36,6 +39,9 @@ imagePreview.addEventListener('click', () => {
 fileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
+
+        selectedFile = file;
+
         const reader = new FileReader();
         // 파일 읽기가 완료되면 img의 src 변경해 이미지 업로드
         reader.onload = (e) => {
@@ -44,6 +50,7 @@ fileInput.addEventListener('change', (event) => {
         reader.readAsDataURL(file);
     } else {
         // 취소를 누르면 다시 기본 이미지로 변경
+        selectedFile = null;
         imagePreview.src = '/assets/profile-default.png';
     }
 })
@@ -88,14 +95,30 @@ nicknameInput.addEventListener('blur', () => {
 
 // 회원가입 버튼 클릭
 signupButton.addEventListener('click', async () => {
-    const signupData = {
-        email: emailInput.value,
-        password: passwordInput.value,
-        passwordConfirm: passwordConfirmInput.value,
-        nickname: nicknameInput.value,
-    };
+    signupButton.disabled = true;
+    signupButton.textContent = '가입 진행 중...';
 
     try {
+        let profileImageUrl = null;
+
+        if (selectedFile) {
+            const uploadedUrls = await uploadImagesToS3([selectedFile], awsUploadUrl);
+
+            if (uploadedUrls && uploadedUrls.length > 0) {
+                profileImageUrl = uploadedUrls[0];
+            } else {
+                throw new Error('프로필 이미지 업로드에 실패했습니다.');
+            }
+        }
+
+        const signupData = {
+            email: emailInput.value,
+            password: passwordInput.value,
+            passwordConfirm: passwordConfirmInput.value,
+            nickname: nicknameInput.value,
+            profileImageUrl: profileImageUrl
+        };
+
         const response = await fetch(`${API_BASE_URL}/api/v1/users/signup`, {
             method: 'POST',
             headers: {
@@ -103,15 +126,21 @@ signupButton.addEventListener('click', async () => {
             },
             body: JSON.stringify(signupData)
         });
+
         if (response.ok) {
             await showInfoModal('회원가입 성공!');
             window.location.href = '/public/pages/login/login.html';
         } else {
             const errorData = await response.json();
             showToast(errorData.message || '회원가입에 실패했습니다.');
+            signupButton.disabled = false;
+            signupButton.textContent = '회원가입';
         }
+
     } catch (error) {
         console.error('Signup Error:', error);
         showToast('회원가입 중 문제가 발생했습니다.');
+        signupButton.disabled = false;
+        signupButton.textContent = '회원가입';
     }
 });
