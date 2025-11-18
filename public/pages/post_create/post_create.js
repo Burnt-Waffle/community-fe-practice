@@ -54,11 +54,12 @@ form.addEventListener('submit', async (event) => {
             imageUrls = await uploadImagesToS3(files, awsUploadUrl);
             if (!imageUrls || imageUrls.length == 0) {
                 throw new Error('이미지 업로드에 실패했습니다.');
-                showToast(responseData.message || '이미지 업로드에 실패했습니다.');
             }
         }
 
-        const responseData = await createPost(title, content, files);
+        submitButton.textContent = '게시글 저장 중...';
+
+        const responseData = await createPost(title, content, imageUrls);
         if (responseData && responseData.id) {
             await showInfoModal('게시글이 성공적으로 등록되었습니다.');
             window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
