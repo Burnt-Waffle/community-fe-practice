@@ -14,6 +14,8 @@ const submitButton = document.getElementById('submit-button');
 const charCounter = document.getElementById('content-char-counter');
 const MAX_POST_LENGTH = 10000;
 
+let newFiles = [];
+
 document.addEventListener('DOMContentLoaded' , async () => {
     await performSilentRefresh();
     await loadHeader({ showProfileButton: true, showBackButton: true });
@@ -21,20 +23,49 @@ document.addEventListener('DOMContentLoaded' , async () => {
 })
 
 imageInput.addEventListener('change', () => {
-    previewContainer.innerHTML = ''; 
+    const files = Array.from(imageInput.files);
+    newFiles = [...newFiles, ...files];
 
-    const files = Array.from(imageInput.files).slice(0, 5);
-    files.forEach(file => {
+    imageInput.value = '';
+
+    renderPreviews();
+    updateSubmitButtonState();
+});
+
+const renderPreviews = () => {
+    previewContainer.innerHTML = '';
+
+    newFiles.forEach((file, index) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'image-preview';
-            previewContainer.appendChild(img);
+            createPreviewElement(e.target.result, index);
         };
         reader.readAsDataURL(file);
     });
-});
+}
+
+const createPreviewElement = (src, index) => {
+    const container = document.createElement('div');
+    container.className = 'preview-item';
+
+    const img = document.createElement('img');
+    img.src = src;
+    
+    const btn = document.createElement('button');
+    btn.className = 'delete-btn';
+    btn.innerHTML = '&#10005;';   // X 특수문자
+    btn.type = 'button';
+
+    btn.onclick = () => {
+        newFiles.splice(index, 1);
+        renderPreviews();
+        updateSubmitButtonState();
+    };
+
+    container.appendChild(img);
+    container.appendChild(btn);
+    previewContainer.appendChild(container);
+};
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -48,12 +79,11 @@ form.addEventListener('submit', async (event) => {
     const files = imageInput.files;
 
     try {
-
         let imageUrls = [];
 
-        if (files && files.length >0) {
-            imageUrls = await uploadImagesToS3(files, awsUploadUrl);
-            if (!imageUrls || imageUrls.length == 0) {
+        if (newFiles.length > 0) {
+            imageUrls = await uploadImagesToS3(newFiles, awsUploadUrl);
+            if (!imageUrls || imageUrls.length === 0) {
                 throw new Error('이미지 업로드에 실패했습니다.');
             }
         }
