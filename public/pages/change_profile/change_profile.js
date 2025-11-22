@@ -1,5 +1,6 @@
 import { authFetch, logoutUser } from "../../../utils/authClient.js";
-import { API_BASE_URL } from "../../../utils/config.js";
+import { API_BASE_URL, awsUploadUrl } from "../../../utils/config.js";
+import { uploadImagesToS3 } from "../../../utils/imageFile.js";
 import { fetchCurrentUser, deleteCurrentUser } from "../../../utils/userRequest.js";
 import { validateNickname } from "../../../utils/validation.js";
 import { loadHeader } from "../../components/header/header.js";
@@ -12,6 +13,8 @@ const nicknameInput = document.getElementById('nickname');
 const nicknameHelper = document.getElementById('nickname-helper');
 const submitButton = document.getElementById('submit-button');
 const deleteButton = document.getElementById('delete-account-button');
+
+let selectedFile = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
@@ -50,15 +53,17 @@ imagePreview.addEventListener('click', () => {
 fileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
+        selectedFile = file;
+        
         const reader = new FileReader();
-        // 파일 읽기가 완료되면 img의 src 변경해 이미지 업로드
         reader.onload = (e) => {
             imagePreview.src = e.target.result;
         };
         reader.readAsDataURL(file);
     } else {
         // 취소를 누르면 다시 기본 이미지로 변경
-        imagePreview.src = '/assets/profile-default.png';
+        // imagePreview.src = '/assets/profile-default.png';
+        selectedFile = null;
     }
 })
 
@@ -85,12 +90,32 @@ submitButton.addEventListener('click', async () => {
     }
 
     submitButton.disabled = true;
+    submitButton.textContent = "수정 중...";
 
     const changeData = {
         nickname: nicknameInput.value,
     };
 
     try {
+        let newProfileImageUrl = null;
+
+        if (selectedFile) {
+            const uploadedUrls = await uploadImagesToS3([selectedFile], awsUploadUrl);
+            if (uploadedUrls && uploadedUrls.length > 0) {
+                newProfileImageUrl = uploadedUrls[0];
+            } else {
+                throw new Error('이미지 업로드에 실패했습니다.');
+            }
+        }
+
+        const changeData = {
+            nickname: nicknameInput.value,
+        };
+
+        if (newProfileImageUrl) {
+            changeData.profileImageUrl = newProfileImageUrl;
+        }
+
         const response = await authFetch(`/api/v1/users/me`, {
             method: 'PATCH',
             headers: {
@@ -110,6 +135,7 @@ submitButton.addEventListener('click', async () => {
         nicknameHelper.textContent = error.message;
     } finally {
         submitButton.disabled = false;
+        submitButton.textContent = "수정하기";
     };
 });
 
