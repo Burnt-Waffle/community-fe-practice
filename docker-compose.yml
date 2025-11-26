@@ -1,0 +1,18 @@
+services:
+  frontend-blue:
+    image: registry.mika-yim.cloud/frontend:latest
+    container_name: frontend-blue
+    restart: always
+    networks:
+      - maru-network
+
+  frontend-green:
+    image: registry.mika-yim.cloud/frontend:latest
+    container_name: frontend-green
+    restart: always
+    networks:
+      - maru-network
+
+networks:
+  maru-network:
+    external: true
