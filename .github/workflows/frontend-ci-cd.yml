@@ -115,21 +115,21 @@ jobs:
               STOP=none
             fi
 
-            echo "Deploying to: \$TARGET"
-            docker compose pull frontend-\$TARGET
-            docker compose up -d frontend-\$TARGET
+            echo "Deploying to: $TARGET"
+            docker compose pull frontend-$TARGET
+            docker compose up -d frontend-$TARGET
 
-            if [ "\$STOP" != "none" ]; then
+            if [ "$STOP" != "none" ]; then
               echo "Running health check..."
               for i in {1..10}; do
                 sleep 2
-                if docker exec frontend-\$TARGET curl -s http://localhost:3000/health; then
+                if docker exec frontend-$TARGET curl -s http://localhost:3000/health; then
                   echo "Health check passed"
                   break
-                elif [ \$i -eq 10 ]; then
+                elif [ $i -eq 10 ]; then
                   echo "Health check failed. Rolling back..."
-                  docker stop frontend-\$TARGET
-                  docker compose restart \$STOP
+                  docker stop frontend-$TARGET
+                  docker compose restart $STOP
                   exit 1
                 fi
               done
@@ -137,11 +137,11 @@ jobs:
               echo "First deploy — skipping health check"
             fi
 
-            echo "Switching Nginx to \$TARGET"
-            sed -i "s/frontend-[a-z]\\+/frontend-\$TARGET/g" nginx-proxy.conf
+            echo "Switching Nginx to $TARGET"
+            sed -i "s/frontend-[a-z]\+/frontend-$TARGET/g" nginx-proxy.conf
             docker exec nginx-proxy nginx -s reload
 
-            if [ "\$STOP" != "none" ]; then
-              docker stop \$STOP || true 
+            if [ "$STOP" != "none" ]; then
+              docker stop $STOP || true 
             fi
           EOF
