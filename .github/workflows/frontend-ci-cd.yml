@@ -138,7 +138,7 @@ jobs:
             fi
 
             echo "Switching Nginx to $TARGET"
-            sed -i "s/frontend-[a-z]\+/frontend-$TARGET/g" nginx-proxy.conf
+            sed -i "s/frontend-[a-z]\+/frontend-$TARGET/g" /home/${{ secrets.SERVER_USER }}/nginx-proxy.conf
             docker exec nginx-proxy nginx -s reload
 
             if [ "$STOP" != "none" ]; then
