@@ -88,4 +88,5 @@ jobs:
           aws deploy create-deployment \
             --application-name maru-community \
             --deployment-group-name maru-fe-deploy-group \
+            --region ap-northeast-2 \
             --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},key=frontend/deploy.zip,bundleType=zip
