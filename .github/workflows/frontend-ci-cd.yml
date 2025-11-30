@@ -67,6 +67,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
       
+      - name: Debug AWS Identity & CodeDeploy
+        run: |
+          echo "=== 1. 현재 사용 중인 자격 증명 확인 (Who am I?) ==="
+          aws sts get-caller-identity
+
+          echo "=== 2. 서울 리전(ap-northeast-2)에 있는 애플리케이션 목록 조회 ==="
+          aws deploy list-applications --region ap-northeast-2
+      
       - name: Create .env file
         run: |
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > .env
