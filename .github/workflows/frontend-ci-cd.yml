@@ -60,75 +60,32 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Prepare SSH Key
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+      
+      - name: Create .env file
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.BASTION_HOST }} >> ~/.ssh/known_hosts
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > .env
+          echo "DOCKER_TOKEN=${{ secrets.DOCKER_TOKEN }}" >> .env
 
-      - name: Check if Docker is installed
-        id: check-docker
+      - name: Zip package
         run: |
-          DOCKER_EXISTS=$(ssh -o StrictHostKeyChecking=no \
-              -i ~/.ssh/id_rsa \
-              -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_PRIVATE_IP }} 'command -v docker >/dev/null && echo "true" || echo "false"')
-          echo "docker_exists=$DOCKER_EXISTS" >> $GITHUB_OUTPUT
+          mkdir -p deploy
+          cp docker-compose.yml appspec.yml .env deploy/
+          cp -r scripts deploy/
+          chmod +x deploy/scripts/*.sh
+          cd deploy && zip -r ../deploy.zip .
 
-      - name: Install Docker on EC2
-        if: steps.check-docker.outputs.docker_exists == 'false'
+      - name: Upload to S3
+        run: aws s3 cp deploy.zip s3://${{ secrets.S3_BUCKET_NAME }}/frontend/deploy.zip
+
+      - name: Trigger CodeDeploy
         run: |
-          ssh -o StrictHostKeyChecking=no \
-              -i ~/.ssh/id_rsa \
-              -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_PRIVATE_IP }} << 'EOF'
-            sudo apt-get update
-            sudo apt-get install -y \
-              ca-certificates \
-              curl \
-              gnupg \
-              lsb-release
-            sudo mkdir -p /etc/apt/keyrings
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-              | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-            echo \
-              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-              https://download.docker.com/linux/ubuntu \
-              $(lsb_release -cs) stable" \
-              | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            sudo apt-get update
-            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-            sudo usermod -aG docker $USER
-          EOF
-
-      - name: Copy Configuration files to EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no \
-              -i ~/.ssh/id_rsa \
-              -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_PRIVATE_IP }} \
-              "mkdir -p /home/${{ secrets.SERVER_USER }}/frontend"
-          
-          scp -o StrictHostKeyChecking=no \
-              -o ProxyCommand="ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -W %h:%p ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}" \
-              -i ~/.ssh/id_rsa \
-              docker-compose.yml \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_PRIVATE_IP }}:/home/${{ secrets.SERVER_USER }}/frontend/
-
-      - name: Deploy to EC2 via Docker Compose
-        run: |
-          ssh -o StrictHostKeyChecking=no \
-              -i ~/.ssh/id_rsa \
-              -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_PRIVATE_IP }} << 'EOF'
-            set -e
-            cd /home/${{ secrets.SERVER_USER }}/frontend
-
-            sudo chmod 666 /var/run/docker.sock
-
-            docker compose pull frontend
-            docker compose up -d frontend
-
-            docker image prune -f
-          EOF
+          aws deploy create-deployment \
+            --application-name maru-community \
+            --deployment-group-name maru-fe-deploy-group \
+            --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},key=frontend/deploy.zip,bundleType=zip
