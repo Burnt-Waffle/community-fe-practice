@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     await loadHeader({ showProfileButton: false, showBackButton: false });
-    signupLink.href = `${API_BASE_URL}/terms`;
+    signupLink.href = '/public/pages/terms/terms.html';
 });
 
 // 로그인 버튼의 이벤트 리스너
