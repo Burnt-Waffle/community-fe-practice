@@ -200,6 +200,7 @@ const handleSubmitComment = async (postId) => {
         showToast(`댓글 등록에 실패했습니다. ${error.message}`);
         commentPostButton.textContent = originalButtonText;
     } finally {
+        commentPostButton.textContent = isEditingComment ? '댓글 수정' : '댓글 등록';
         commentPostButton.disabled = false;
     }
 };
