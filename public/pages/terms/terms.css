@@ -100,6 +100,7 @@ a:hover {
     border: 1px solid #F0F0F0;
     cursor: pointer;
     font-weight: 700;
+    transition: all 0.2s ease;
 }
 
 .all-check-container label {
