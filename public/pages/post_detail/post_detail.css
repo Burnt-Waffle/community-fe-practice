@@ -17,8 +17,8 @@
 }
 
 .author-profile-image {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 2px solid #394648;
     margin-right: 10px;
@@ -240,11 +240,11 @@
 }
 
 .comment-profile-image {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid #E0D4C3;
+    border: 2px solid #394648;
     flex-shrink: 0;
 }
 
