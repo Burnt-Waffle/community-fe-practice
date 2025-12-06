@@ -65,7 +65,7 @@ const renderTermList = (terms) => {
 
         // 상세 보기 링크
         const link = document.createElement('a');
-        link.href = `/public/pages/terms/term_detail.html?id=${term.id}`;
+        link.href = `/public/pages/terms/terms_detail.html?id=${term.id}`;
         link.textContent = '상세보기 >';
         link.className = 'term-link';
 
