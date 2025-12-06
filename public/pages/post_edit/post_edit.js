@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded' , async () => {
         await loadPostData(currentPostId);
     } else {
         await showInfoModal('잘못된 접근입니다.');
-        window.location.href = '/public/pages/post_list/post_list.html';
+        window.location.replace('/public/pages/post_list/post_list.html');
     }
 
     updateSubmitButtonState();
@@ -144,7 +144,7 @@ form.addEventListener('submit', async (event) => {
         const responseData = await updatePost(currentPostId, titleInput.value, contentInput.value, finalImageUrls);
         if (responseData && responseData.id) {
             await showInfoModal('게시글 수정 완료!')
-            window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
+            window.location.replace(`/public/pages/post_detail/post_detail.html?id=${responseData.id}`);
         } else {
             showToast(responseData.message || '게시글 수정에 실패했습니다.');
         }

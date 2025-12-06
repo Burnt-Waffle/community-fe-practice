@@ -24,7 +24,11 @@ const commentListContainer = document.getElementById('comment-list');
 
 document.addEventListener('DOMContentLoaded', async () => {
     await performSilentRefresh();
-    await loadHeader({ showProfileButton: true, showBackButton: true });
+    await loadHeader({
+        showProfileButton: true,
+        showBackButton: true,
+        backUrl: '/public/pages/post_list/post_list.html'
+     });
     const urlParams = new URLSearchParams(window.location.search);
     currentPostId = urlParams.get('id');
     if (currentPostId) {

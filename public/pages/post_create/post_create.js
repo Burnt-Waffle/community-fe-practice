@@ -21,7 +21,11 @@ let newFiles = [];
 
 document.addEventListener('DOMContentLoaded' , async () => {
     await performSilentRefresh();
-    await loadHeader({ showProfileButton: true, showBackButton: true });
+    await loadHeader({
+        showProfileButton: true,
+        showBackButton: true,
+        backUrl: '/public/pages/post_list/post_list.html'
+    });
     updateSubmitButtonState();
 })
 
@@ -111,7 +115,7 @@ form.addEventListener('submit', async (event) => {
         const responseData = await createPost(title, content, imageUrls);
         if (responseData && responseData.id) {
             await showInfoModal('게시글이 성공적으로 등록되었습니다.');
-            window.location.href = `/public/pages/post_detail/post_detail.html?id=${responseData.id}`;
+            window.location.replace(`/public/pages/post_detail/post_detail.html?id=${responseData.id}`);
         } else {
             showToast(responseData.message || '게시글 등록에 실패했습니다.');
         }
