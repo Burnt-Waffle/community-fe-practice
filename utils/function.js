@@ -14,7 +14,7 @@ export const formatDate = (date) => {
     });
 
     const parts = krDate.formatToParts(d);
-    
+
     const getPart = (type) => parts.find(p => p.type === type).value;
     const year = getPart('year');
     const month = getPart('month');
@@ -24,4 +24,14 @@ export const formatDate = (date) => {
     const second = getPart('second');
 
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+
+export const escapeHtml = (text) => {
+    if (!text) return '';
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
