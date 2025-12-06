@@ -52,7 +52,7 @@ const createPreviewElement = (src, index) => {
     img.src = src;
     
     const btn = document.createElement('button');
-    btn.className = 'delete-btn';
+    btn.className = 'delete-button';
     btn.innerHTML = '&#10005;';   // X 특수문자
     btn.type = 'button';
 
@@ -75,8 +75,6 @@ form.addEventListener('submit', async (event) => {
 
     const title = titleInput.value;
     const content = contentInput.value;
-
-    const files = imageInput.files;
 
     try {
         let imageUrls = [];
@@ -112,6 +110,12 @@ const updateSubmitButtonState = () => {
 
     const currentLength = content.length;
     charCounter.textContent = `${currentLength} / ${MAX_POST_LENGTH}`;
+
+    if (currentLength > MAX_POST_LENGTH) {
+        charCounter.style.color = '#ff6b6b';
+    } else {
+        charCounter.style.color = '#9EA4A5'; // 기본 색상
+    }
 
     if (title.length > 0 && content.trim().length > 0) {
         submitButton.disabled = false;

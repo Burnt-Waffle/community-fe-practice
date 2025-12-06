@@ -34,12 +34,13 @@
                     </div>
                 </div>
                 <!-- 이미지 파일 업로드 -->
-                <div class="input-group">
-                    <label>이미지 첨부 (선택)</label>
+                <div class="input-group file-group">
+                    <label class="input-label">이미지 첨부</label>
                     <input type="file" id="post-images" name="images" multiple accept="image/*">
-                    <!-- 이미지 미리보기 영역 -->
+                    <label for="post-images" class="file-upload-button">
+                        <span>사진 추가하기</span>
+                    </label>
                     <div class="image-preview-container" id="image-preview-container">
-                        <!-- JS로 이미지 미리보기를 여기에 추가 -->
                     </div>
                 </div>
                 <!-- 작성 버튼 -->
