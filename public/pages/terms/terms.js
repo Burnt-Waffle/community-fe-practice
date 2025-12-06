@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadTerms();
 
     allCheckContainer.addEventListener('click', (e) => {
-        if (e.target === checkAll || e.target.tagName === 'LABEL') return;
+        if (e.target === checkAll) return;
+        if (e.target.closest('label')) return;
         checkAll.checked = !checkAll.checked;
         checkAll.dispatchEvent(new Event('change'));
     });
@@ -80,7 +81,7 @@ const renderTermList = (terms) => {
             if (e.target === link) return;
 
             if (e.target === checkbox || e.target === label) {
-                setTimeout(updateNextButtonState, 0); 
+                setTimeout(updateNextButtonState, 0);
                 return;
             }
 
