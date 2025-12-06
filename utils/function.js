@@ -1,5 +1,5 @@
 export const formatDate = (date) => {
-    const now = new Date(date)
+    const inputDate = new Date(date)
     const utc = inputDate.getTime() + (inputDate.getTimezoneOffset() * 60 * 1000);
     const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
     const kstDate = new Date(utc + KR_TIME_DIFF);
