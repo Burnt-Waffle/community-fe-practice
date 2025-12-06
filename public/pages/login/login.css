@@ -31,11 +31,11 @@
 .login-input input {
     width: 100%;
     padding: 14px 16px;
-    border: 1px solid #E0D4C3;
+    border: 1px solid #D4CDC6;
     border-radius: 8px;
     font-size: 16px;
     color: #394648;
-    background-color: #FAFAFA;
+    background-color: #FFFFFF;
     box-sizing: border-box;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -48,7 +48,7 @@
 /* input 태그에 포커스 되었을 때 */
 .login-input input:focus {
     outline: none;
-    border-color: #CBAC88;
+    border-color: #EDB6A3;
     background-color: #FFFFFF;
     box-shadow: 0 4px 16px rgba(203, 172, 136, 0.25); 
     transform: translateY(-2px);
@@ -110,7 +110,7 @@
 
 /* 회원가입 버튼에 마우스를 올렸을 때 */
 .buttons a:hover {
-    color: #CBAC88;
+    color: #EDB6A3;
     text-decoration: none;
     font-weight: 600;
 }
