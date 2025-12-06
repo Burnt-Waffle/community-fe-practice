@@ -68,7 +68,7 @@ const renderTermList = (terms) => {
         // 상세 보기 링크
         const link = document.createElement('a');
         link.href = `/public/pages/terms_detail/terms_detail.html?id=${term.id}`;
-        link.textContent = '상세보기';
+        link.textContent = '상세보기 >';
         link.className = 'term-link';
 
         li.appendChild(checkbox);
