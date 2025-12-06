@@ -1,16 +1,27 @@
 export const formatDate = (date) => {
-    const inputDate = new Date(date)
-    const utc = inputDate.getTime() + (inputDate.getTimezoneOffset() * 60 * 1000);
-    const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-    const kstDate = new Date(utc + KR_TIME_DIFF);
+    if (!date) return '';
+    const d = new Date(date);
 
-    const year = kstDate.getFullYear()
-    const month = String(kstDate.getMonth() + 1).padStart(2, '0')
-    const day = String(kstDate.getDate()).padStart(2, '0')
-    const hours = String(kstDate.getHours()).padStart(2, '0')
-    const minutes = String(kstDate.getMinutes()).padStart(2, '0')
-    const seconds = String(kstDate.getSeconds()).padStart(2, '0')
+    const krDate = new Intl.DateTimeFormat('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    });
 
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-    return formattedDate
+    const parts = krDate.formatToParts(d);
+    
+    const getPart = (type) => parts.find(p => p.type === type).value;
+    const year = getPart('year');
+    const month = getPart('month');
+    const day = getPart('day');
+    const hour = getPart('hour');
+    const minute = getPart('minute');
+    const second = getPart('second');
+
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
