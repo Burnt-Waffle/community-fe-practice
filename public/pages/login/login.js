@@ -11,7 +11,6 @@ const signupLink = document.getElementById('signup-link');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    await performSilentRefresh();
     if (getAccessToken()) {
         window.location.href = '/public/pages/post_list/post_list.html';
         return;
