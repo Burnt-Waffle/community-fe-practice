@@ -60,8 +60,8 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    border: 1px solid #E0D4C3;
-    border-radius: 12px;
+    border: 1px solid #F0F0F0;
+    border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     padding: 24px;
     cursor: pointer;
@@ -70,8 +70,9 @@
 }
 
 .post-container:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: #EDB6A3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 182, 163, 0.15);
 }
 
 .post-title {
