@@ -33,6 +33,7 @@ h1 {
     padding-bottom: 20px;
 }
 
+/* --- 약관 리스트 --- */
 ul {
     list-style: none;
     padding: 0;
@@ -42,6 +43,7 @@ ul {
     gap: 16px;
 }
 
+/* --- 개별 약관 카드 --- */
 li {
     background-color: #FAFAFA;
     border: 1px solid #F0F0F0;
@@ -49,9 +51,11 @@ li {
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
+    cursor: pointer;
     padding: 15px;
 }
 
+.all-check-container
 li:hover {
     background-color: #FFFFFF;
     border-color: #EDB6A3;
@@ -95,6 +99,7 @@ a::after {
     border-radius: 8px;
     margin-bottom: 15px;
     border: 1px solid #F0F0F0;
+    cursor: pointer;
 }
 
 .all-check-container label {
@@ -109,12 +114,13 @@ a::after {
     margin-bottom: 20px;
 }
 
+/* 체크박스 디자인 */
 input[type="checkbox"] {
     width: 20px;
     height: 20px;
     margin-right: 12px;
     cursor: pointer;
-    accent-color: #7AB06D;
+    accent-color: #69995D;
 }
 
 .term-item-container {
@@ -123,12 +129,22 @@ input[type="checkbox"] {
     width: 100%;
 }
 
+.term-label {
+    font-size: 16px;
+    color: #394648;
+    font-weight: 600;
+    cursor: pointer;
+    flex-grow: 1; /* 남은 공간 차지 */
+}
+
 .term-link {
-    margin-left: auto;
     font-size: 13px;
     color: #9EA4A5;
-    text-decoration: underline;
-    padding: 5px;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .term-link:hover {
@@ -160,4 +176,5 @@ input[type="checkbox"] {
 .next-button:not(:disabled):hover {
     transform: translateY(-2px);
     filter: brightness(105%);
+    box-shadow: 0 6px 15px rgba(105, 153, 93, 0.4);
 }

@@ -4,6 +4,7 @@ import { loadHeader } from "../../components/header/header.js";
 const termListElement = document.getElementById('term-list');
 const nextButton = document.getElementById('next-button');
 const checkAll = document.getElementById('check-all');
+const allCheckContainer = document.querySelector('.all-check-container');
 
 let termsData = [];
 
@@ -14,6 +15,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         backUrl: '/public/pages/login/login.html'
     });
     await loadTerms();
+
+    allCheckContainer.addEventListener('click', (e) => {
+        if (e.target === checkAll || e.target.tagName === 'LABEL') return;
+        checkAll.checked = !checkAll.checked;
+        checkAll.dispatchEvent(new Event('change'));
+    });
 
     checkAll.addEventListener('change', (e) => {
         const isChecked = e.target.checked;
@@ -46,35 +53,40 @@ const renderTermList = (terms) => {
     terms.forEach(term => {
         const li = document.createElement('li');
 
-        // 체크박스 + 라벨 컨테이너
-        const container = document.createElement('div');
-        container.className = 'term-item-container';
-
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = `term-${term.id}`;
         checkbox.className = 'term-checkbox';
-
         checkbox.dataset.required = 'true';
 
         const label = document.createElement('label');
         label.htmlFor = `term-${term.id}`;
         label.textContent = `[필수] ${term.title}`;
-        label.style.cursor = 'pointer';
-        label.style.marginLeft = '8px';
+        label.className = 'term-label'; // CSS 스타일 적용을 위해 클래스 추가
 
         // 상세 보기 링크
         const link = document.createElement('a');
         link.href = `/public/pages/terms/terms_detail.html?id=${term.id}`;
-        link.textContent = '상세보기 >';
+        link.textContent = '상세보기';
         link.className = 'term-link';
 
-        container.appendChild(checkbox);
-        container.appendChild(label);
-        container.appendChild(link);
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        li.appendChild(link);
 
-        li.appendChild(container);
         termListElement.appendChild(li);
+
+        li.addEventListener('click', (e) => {
+            if (e.target === link) return;
+
+            if (e.target === checkbox || e.target === label) {
+                setTimeout(updateNextButtonState, 0); 
+                return;
+            }
+
+            checkbox.checked = !checkbox.checked;
+            updateNextButtonState();
+        });
 
         // 개별 체크박스 이벤트 리스너
         checkbox.addEventListener('change', updateNextButtonState);
