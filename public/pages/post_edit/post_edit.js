@@ -12,7 +12,10 @@ const imageInput = document.getElementById('post-images');
 const previewContainer = document.getElementById('image-preview-container');
 const submitButton = document.getElementById('submit-button');
 const charCounter = document.getElementById('content-char-counter');
+
 const MAX_POST_LENGTH = 10000;
+const MAX_FILE_COUNT = 3;
+const MAX_TOTAL_FILES_SIZE = 10 * 1024 * 1024;
 
 let currentPostId = null;
 let existingImageUrls = [];
@@ -57,6 +60,21 @@ const loadPostData = async(postId) => {
 
 imageInput.addEventListener('change', () => {
     const files = Array.from(imageInput.files);
+     if (newFiles.length + files.length > MAX_FILE_COUNT) {
+            showToast(`이미지는 최대 ${MAX_FILE_COUNT}장까지 첨부할 수 있습니다.`);
+            imageInput.value = '';
+            return;
+        }
+    
+        const currentTotalSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+    
+        const newFilesTotalSize = files.reduce((acc, file) => acc + file.size, 0);
+    
+        if (currentTotalSize + newFilesTotalSize > MAX_TOTAL_FILES_SIZE) {
+            showToast(`총 업로드 용량은 ${MAX_TOTAL_FILES_SIZE / (1024 * 1024)}MB를 초과할 수 없습니다.`);
+            imageInput.value = ''; 
+            return; 
+        }
     newFiles = [...newFiles, ...files];
     imageInput.value = '';
     renderPreviews();
