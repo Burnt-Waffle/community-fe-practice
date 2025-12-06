@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "../../../utils/config.js";
 import { loadHeader } from "../../components/header/header.js";
-import { setAccessToken } from "../../../utils/authClient.js";
+import { setAccessToken, getAccessToken } from "../../../utils/authClient.js";
+import { performSilentRefresh } from "../../../utils/silentRefresh.js";
 
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('id');
@@ -10,6 +11,11 @@ const signupLink = document.getElementById('signup-link');
 
 // DOM이 완전히 로드된 후에 스크립트를 실행
 document.addEventListener('DOMContentLoaded', async () => {
+    await performSilentRefresh();
+    if (getAccessToken()) {
+        window.location.href = '/public/pages/post_list/post_list.html';
+        return;
+    }
     await loadHeader({ showProfileButton: false, showBackButton: false });
     signupLink.href = `${API_BASE_URL}/terms`;
 });
