@@ -28,7 +28,7 @@ export const createPostListElement = ({ id, title, thumbnailUrl, authorNickname,
             <span class="post-date">${formattedDate}</span>
         </div>
         <div class="author">
-            <img class="author-profile-image" src="${profileImageUrl}" alt="프로필 이미지">
+            <img class="author-profile-image" src="${escapeHtml(profileImageUrl)}" alt="프로필 이미지">
             <div class="author-nickname">${escapeHtml(authorNickname)}</div>
         </div>
     `;

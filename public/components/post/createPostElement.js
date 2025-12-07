@@ -16,12 +16,12 @@ export const createPostElement = ({ id, title, content, thumbnailUrl, imageUrls,
         profileImageUrl = '/assets/profile-default.png';
     }
 
-    const imagesHtml = imageUrls.map(url => `<img src="${url}" alt="게시물 이미지" class="post-image-item">`).join('');
+    const imagesHtml = imageUrls.map(url => `<img src="${escapeHtml(url)}" alt="게시물 이미지" class="post-image-item">`).join('');
 
     const likedClass = likedByCurrentUser ? 'liked' : '';
 
     container.innerHTML = `
-        <h3 class="post-title">${title}</h3>
+        <h3 class="post-title">${escapeHtml(title)}</h3>
                 <div class="post-header">
                     <img class="author-profile-image" src="${escapeHtml(profileImageUrl)}" alt="프로필 이미지">
                     <div class="author">${escapeHtml(authorNickname)}</div>
