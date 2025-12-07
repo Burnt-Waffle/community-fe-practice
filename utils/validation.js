@@ -35,11 +35,19 @@ export function validateNickname(nickname) {
     if (!nickname) {
         return '닉네임을 입력해주세요.';
     }
+    // 한글, 영문, 숫자만 허용하는 정규식
+    const nicknamePattern = /^[가-힣a-zA-Z0-9]*$/;
+    if (!nicknamePattern.test(nickname)) {
+        return '닉네임은 한글, 영문, 숫자만 입력 가능합니다.';
+    }
     if (/\s/.test(nickname)) {
         return '띄어쓰기를 없애주세요.';
     }
     if (nickname.length >10) {
         return '닉네임은 최대 10자까지 작성 가능합니다.';
+    }
+    if (nickname.length < 2) {
+        return '닉네임은 최소 2자 이상 입력해야 합니다.';
     }
     return null;
 }
