@@ -105,7 +105,7 @@ const createPreviewElement = (src, index, type) => {
     img.src = src;
     
     const btn = document.createElement('button');
-    btn.className = 'delete-btn';
+    btn.className = 'delete-button';
     btn.innerHTML = '&#10005;'; // X 특수문자
     btn.type = 'button';
 
