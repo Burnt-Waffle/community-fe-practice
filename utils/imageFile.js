@@ -8,16 +8,29 @@ export const uploadImagesToS3 = async (files, uploadUrl) => {
             fileType: file.type
         }));
 
+        
         const response = await authFetch(uploadUrl, {
             method: 'POST',
             body: JSON.stringify({ files: fileInfos }) // 파일 바이너리가 아닌 JSON 전송
         });
+        
+        console.log("Lambda Response:", response);
+        
+        if (!response || !response.data) {
+            throw new Error("서버로부터 Presigned URL을 받지 못했습니다. Lambda 로그를 확인하세요.");
+        }
+
 
         // Lambda 응답: [{ uploadUrl: "...", fileUrl: "..." }, ...]
         const presignedData = response.data;
 
         // 받아온 URL로 S3에 직접 업로드 (병렬 처리)
         const uploadPromises = files.map((file, index) => {
+
+            if (!presignedData[index]) {
+                throw new Error(`파일(${index})에 대한 업로드 URL이 없습니다.`);
+            }
+            
             const { uploadUrl, fileUrl } = presignedData[index];
 
             return fetch(uploadUrl, {
