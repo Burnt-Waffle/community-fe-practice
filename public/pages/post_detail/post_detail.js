@@ -191,6 +191,7 @@ const handleSubmitComment = async (postId) => {
             const newCommentElement = createCommentElement(newCommentData);
             attachCommentEventListeners(newCommentElement, newCommentData);
             commentListContainer.prepend(newCommentElement);
+            updateCommentCountDisplay(1);
         }
 
         commentInputBox.value = '';
@@ -247,6 +248,7 @@ const handleDeleteComment = async (postId, commentId) => {
                 commentElement.style.opacity = '0';
                 setTimeout(() => commentElement.remove(), 300);
             }
+            updateCommentCountDisplay(-1);
 
             await showInfoModal('댓글이 삭제되었습니다.');
         } catch (error) {
@@ -266,3 +268,13 @@ const handleEditComment = async (commentId, currentContent) => {
 
     updateCommentButtonState();
 }
+
+// 댓글 수를 업데이트하는 헬퍼 함수
+const updateCommentCountDisplay = (delta) => {
+    const commentCountElement = document.querySelector('.post-detail-container .comments');
+    if (commentCountElement) {
+        let currentCount = parseInt(commentCountElement.textContent.replace('댓글수 ', '')) || 0;
+        currentCount += delta;
+        commentCountElement.textContent = `댓글수 ${currentCount}`;
+    }
+};
