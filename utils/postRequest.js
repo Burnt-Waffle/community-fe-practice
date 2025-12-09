@@ -3,7 +3,7 @@ import { authFetch } from "./authClient.js";
 const postAPIUrl = '/api/v1/posts' 
 
 export const fetchPosts = async (options = {}) => {
-    const config = {page: 0, size: 30, ...options};
+    const config = {page: 0, size: 10, ...options};
     const response = await authFetch(`${postAPIUrl}?page=${config.page}&size=${config.size}`, {
         method: 'GET'
     })
