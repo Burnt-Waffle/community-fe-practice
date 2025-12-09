@@ -6,7 +6,7 @@ import { performSilentRefresh } from '../../../utils/silentRefresh.js';
 const createPostButton = document.getElementById('create-post-button');
 
 let nextPage = 0;
-const pageSize = 30;
+const pageSize = 10;
 let isLastPage = false;
 let isLoading = false;
 
